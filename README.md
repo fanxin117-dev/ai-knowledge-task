@@ -232,6 +232,20 @@ tests/
   e2e/
 ```
 
+## 学习文档
+
+如果你是初学者，建议从这里开始系统学习本项目：
+
+- [学习文档索引](./docs/learning/README.md)
+- [项目总览与学习路线](./docs/learning/01-project-overview.md)
+- [环境、命令与项目启动](./docs/learning/02-environment-and-commands.md)
+- [TypeScript、React 与 Next.js 前端](./docs/learning/03-frontend-next-react-typescript.md)
+- [Next.js API 与服务层设计](./docs/learning/04-api-and-service-layer.md)
+- [PostgreSQL、Prisma 与数据建模](./docs/learning/05-database-prisma-postgresql.md)
+- [AI Provider、配置与模型调用](./docs/learning/06-ai-provider.md)
+- [测试体系：Vitest、Playwright 与回归测试](./docs/learning/07-testing.md)
+- [Git、GitHub 与工程化管理](./docs/learning/08-git-github-ci.md)
+
 ## 下一阶段
 
 下一阶段建议继续做“任务管理效率和真实使用体验打磨”：
