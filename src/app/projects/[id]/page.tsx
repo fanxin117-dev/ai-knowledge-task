@@ -1,0 +1,71 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ProjectArchiveButton } from "@/components/projects/project-archive-button";
+import { ProjectTaskBoard } from "@/components/projects/project-task-board";
+import { DeleteButton } from "@/components/ui/delete-button";
+import { PageHeader } from "@/components/ui/page-header";
+import { getProject } from "@/lib/api/services";
+
+export const dynamic = "force-dynamic";
+
+type ProjectDetailPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const { id } = await params;
+  const project = await getProject(id).catch(() => null);
+
+  if (!project) {
+    notFound();
+  }
+
+  const openTasks = project.tasks.filter((task) => task.status === "OPEN");
+  const doneTasks = project.tasks.filter((task) => task.status === "DONE");
+
+  return (
+    <main className="space-y-6">
+      <PageHeader
+        eyebrow="Project Detail"
+        title={project.name}
+        description={
+          project.isArchived
+            ? `已归档于 ${project.archivedAt?.slice(0, 10)}。${project.description ?? "这个项目还没有描述。"}`
+            : project.description ?? "这个项目还没有描述。"
+        }
+      />
+
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href={`/projects/${project.id}/edit`}
+          className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
+        >
+          编辑项目
+        </Link>
+        <Link
+          href={`/tasks?project=${project.id}`}
+          className="rounded-md border-2 border-line bg-paper px-4 py-2 text-sm font-black text-ink shadow-panel"
+        >
+          查看任务筛选
+        </Link>
+        <ProjectArchiveButton projectId={project.id} isArchived={project.isArchived} />
+        {project.taskCount === 0 ? (
+          <DeleteButton endpoint={`/api/projects/${project.id}`} redirectTo="/projects" label={project.name} />
+        ) : null}
+      </div>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">OPEN TASKS</p>
+          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.openTaskCount}</p>
+        </div>
+        <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">TOTAL TASKS</p>
+          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.taskCount}</p>
+        </div>
+      </section>
+
+      <ProjectTaskBoard openTasks={openTasks} doneTasks={doneTasks} />
+    </main>
+  );
+}

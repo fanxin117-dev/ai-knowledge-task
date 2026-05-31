@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum TaskStatus {
+  OPEN
+  DONE
+
+  @@map("task_status")
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+
+  @@map("task_priority")
+}
+
+enum AiResultType {
+  SUMMARY
+  ACTION_ITEMS
+
+  @@map("ai_result_type")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  aiResults AiResult[]
+  noteTags  NoteTag[]
+  tasks     Task[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@map("notes")
+}
+
+model Task {
+  id           String     @id @default(cuid())
+  title        String
+  description  String?
+  status       TaskStatus @default(OPEN)
+  priority     TaskPriority @default(MEDIUM)
+  dueAt        DateTime?  @map("due_at")
+  projectId    String     @map("project_id")
+  sourceNoteId String?    @map("source_note_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  project    Project   @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  sourceNote Note?     @relation(fields: [sourceNoteId], references: [id], onDelete: SetNull)
+  taskTags   TaskTag[]
+
+  @@index([status])
+  @@index([priority])
+  @@index([dueAt])
+  @@index([projectId])
+  @@index([sourceNoteId])
+  @@index([createdAt])
+  @@unique([projectId, title])
+  @@map("tasks")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  archivedAt  DateTime? @map("archived_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  tasks Task[]
+
+  @@index([archivedAt])
+  @@index([updatedAt])
+  @@map("projects")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#d7ff37")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  noteTags NoteTag[]
+  taskTags TaskTag[]
+
+  @@index([createdAt])
+  @@map("tags")
+}
+
+model NoteTag {
+  noteId    String   @map("note_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  note Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([noteId, tagId])
+  @@index([tagId])
+  @@map("note_tags")
+}
+
+model TaskTag {
+  taskId    String   @map("task_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([taskId, tagId])
+  @@index([tagId])
+  @@map("task_tags")
+}
+
+model AiResult {
+  id        String       @id @default(cuid())
+  noteId    String       @map("note_id")
+  type      AiResultType
+  content   String
+  createdAt DateTime     @default(now()) @map("created_at")
+
+  note Note @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@index([noteId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("ai_results")
+}
