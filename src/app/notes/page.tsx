@@ -35,6 +35,14 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
         eyebrow="Notes"
         title="笔记"
         description="笔记列表已切换到 PostgreSQL 数据源，并支持标题、正文关键词搜索和标签筛选。"
+        actions={
+          <Link
+            href="/notes/new"
+            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+          >
+            新建笔记
+          </Link>
+        }
       />
 
       <SearchForm
@@ -43,13 +51,6 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
         defaultQuery={query}
         hiddenFields={{ tag: tagId }}
       />
-
-      <Link
-        href="/notes/new"
-        className="inline-flex rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
-      >
-        新建笔记
-      </Link>
 
       <FilterRail label="TAG" items={tagFilters} />
 

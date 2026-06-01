@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type SidebarNavProps = {
   compact?: boolean;
@@ -15,19 +18,39 @@ const navItems = [
 ];
 
 export function SidebarNav({ compact = false }: SidebarNavProps) {
+  const pathname = usePathname();
+
+  function isActive(href: string) {
+    if (href === "/") {
+      return pathname === href;
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }
+
   if (compact) {
     return (
-      <nav aria-label="主导航" className="flex gap-2 overflow-x-auto rounded-lg border-2 border-line bg-surface p-2 shadow-panel">
+      <div className="relative max-w-full">
+        <nav
+          aria-label="主导航"
+          className="flex max-w-full snap-x gap-2 overflow-x-auto overscroll-x-contain rounded-lg border-2 border-line bg-surface p-2 shadow-soft [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
         {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="shrink-0 rounded-md border border-line bg-paper px-3 py-2 text-sm font-semibold text-ink hover:bg-accent"
-          >
-            {item.label}
-          </Link>
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={[
+                "flex min-h-11 shrink-0 snap-start items-center rounded-md border border-line px-3 py-2 text-sm font-semibold text-ink shadow-control",
+                isActive(item.href) ? "bg-selected" : "bg-paper hover:bg-accent",
+              ].join(" ")}
+            >
+              {item.label}
+            </Link>
         ))}
-      </nav>
+        </nav>
+        <div className="pointer-events-none absolute inset-y-1 right-1 w-8 bg-gradient-to-l from-surface to-transparent" aria-hidden />
+      </div>
     );
   }
 
@@ -43,7 +66,11 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
           <Link
             key={item.href}
             href={item.href}
-            className="group grid grid-cols-[2.25rem_1fr] gap-3 rounded-md border border-transparent px-3 py-3 hover:border-line hover:bg-accent"
+            aria-current={isActive(item.href) ? "page" : undefined}
+            className={[
+              "group grid min-h-14 grid-cols-[2.25rem_1fr] gap-3 rounded-md border px-3 py-3",
+              isActive(item.href) ? "border-line bg-selected" : "border-transparent hover:border-line hover:bg-accent",
+            ].join(" ")}
           >
             <span className="font-[var(--font-mono)] text-xs text-copper group-hover:text-ink">{item.code}</span>
             <span>

@@ -29,6 +29,14 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         eyebrow="Projects"
         title="项目"
         description="项目是任务的上层归属，一个具体项目下可以管理一组任务。"
+        actions={
+          <Link
+            href="/projects/new"
+            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+          >
+            新建项目
+          </Link>
+        }
       />
 
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -37,8 +45,9 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
             <Link
               key={item.href}
               href={item.href}
+              aria-current={item.active ? "page" : undefined}
               className={[
-                "rounded-md border-2 border-line px-3 py-2 text-sm font-black shadow-panel",
+                "inline-flex min-h-11 items-center rounded-md border-2 border-line px-3 py-2 text-sm font-black shadow-control",
                 item.active ? "bg-ink text-surface" : "bg-paper text-ink",
               ].join(" ")}
             >
@@ -46,12 +55,6 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
             </Link>
           ))}
         </nav>
-        <Link
-          href="/projects/new"
-          className="inline-flex rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
-        >
-          新建项目
-        </Link>
       </div>
 
       <ModulePanel

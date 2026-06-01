@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  min-height: 100%;
+  min-height: 100dvh;
   margin: 0;
   background:
     linear-gradient(90deg, rgba(22, 19, 13, 0.055) 1px, transparent 1px),
@@ -43,6 +43,32 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+a,
+button,
+summary,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid #2457d6;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  summary {
+    transition:
+      background-color 150ms ease-out,
+      color 150ms ease-out,
+      border-color 150ms ease-out,
+      box-shadow 150ms ease-out;
+  }
 }
 
 ::selection {

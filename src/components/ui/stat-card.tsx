@@ -6,7 +6,7 @@ type StatCardProps = {
 
 export function StatCard({ label, value, helper }: StatCardProps) {
   return (
-    <article className="relative overflow-hidden rounded-lg border-2 border-line bg-paper p-5 shadow-panel">
+    <article className="relative min-w-0 overflow-hidden rounded-lg border-2 border-line bg-paper p-4 shadow-soft md:p-5">
       {/* 左侧色条把统计卡做成仪表标签，后续有真实数据时可以按状态换色。 */}
       <div className="absolute left-0 top-0 h-full w-2 bg-ember" aria-hidden />
       <p className="pl-3 font-[var(--font-mono)] text-xs font-bold text-muted">{label}</p>

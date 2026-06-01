@@ -117,6 +117,14 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         eyebrow="Tasks"
         title="任务"
         description="任务列表已切换到 PostgreSQL 数据源，并支持标题搜索、状态筛选和标签筛选。"
+        actions={
+          <Link
+            href="/tasks/new"
+            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+          >
+            新建任务
+          </Link>
+        }
       />
 
       <SearchForm
@@ -125,13 +133,6 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         defaultQuery={query}
         hiddenFields={{ tag: tagId, status, priority, overdue: overdue ? "true" : undefined, project: projectId }}
       />
-
-      <Link
-        href="/tasks/new"
-        className="inline-flex rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
-      >
-        新建任务
-      </Link>
 
       <div className="space-y-3">
         <FilterRail label="PROJECT" items={projectFilters} />

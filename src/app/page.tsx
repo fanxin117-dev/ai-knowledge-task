@@ -38,6 +38,7 @@ export default async function DashboardPage() {
         eyebrow="MVP 第六阶段"
         title="AI Knowledge Task Hub"
         description="当前阶段已经接入 CRUD API、AI provider、核心测试和端到端测试，页面数据来自 PostgreSQL。"
+        prominent
       />
 
       <section className="grid gap-4 md:grid-cols-3" aria-label="数据概览">

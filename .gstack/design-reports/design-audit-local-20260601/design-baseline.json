@@ -1,0 +1,80 @@
+{
+  "date": "2026-06-01",
+  "url": "http://127.0.0.1:3020",
+  "designScore": "C+",
+  "aiSlopScore": "B-",
+  "categoryGrades": {
+    "visualHierarchy": "C+",
+    "typography": "C",
+    "spacingAndLayout": "C",
+    "colorAndContrast": "B-",
+    "interactionStates": "C",
+    "responsive": "D+",
+    "contentQuality": "C+",
+    "aiSlop": "B-",
+    "motion": "C",
+    "performanceFeel": "B-"
+  },
+  "findings": [
+    {
+      "id": "FINDING-001",
+      "title": "移动端导航横向裁切",
+      "impact": "high",
+      "category": "responsive"
+    },
+    {
+      "id": "FINDING-002",
+      "title": "移动端主容器和卡片存在横向溢出",
+      "impact": "high",
+      "category": "responsive"
+    },
+    {
+      "id": "FINDING-003",
+      "title": "卡片和阴影过多，工具界面显得沉重",
+      "impact": "medium",
+      "category": "spacingAndLayout"
+    },
+    {
+      "id": "FINDING-004",
+      "title": "页面标题过大，挤压真正工作区",
+      "impact": "medium",
+      "category": "visualHierarchy"
+    },
+    {
+      "id": "FINDING-005",
+      "title": "筛选区在移动端过密，扫描成本高",
+      "impact": "medium",
+      "category": "interactionStates"
+    },
+    {
+      "id": "FINDING-006",
+      "title": "色彩语义不够克制",
+      "impact": "medium",
+      "category": "colorAndContrast"
+    },
+    {
+      "id": "FINDING-007",
+      "title": "AI 配置页表单优先级偏后",
+      "impact": "medium",
+      "category": "visualHierarchy"
+    },
+    {
+      "id": "FINDING-008",
+      "title": "内容摘要过长，列表扫描效率低",
+      "impact": "medium",
+      "category": "contentQuality"
+    },
+    {
+      "id": "FINDING-009",
+      "title": "页面状态文案削弱信任",
+      "impact": "medium",
+      "category": "contentQuality"
+    },
+    {
+      "id": "FINDING-010",
+      "title": "资源 404 需要排查",
+      "impact": "low",
+      "category": "performanceFeel"
+    }
+  ]
+}

@@ -255,3 +255,36 @@ tests/
 - 给项目看板增加拖拽移动或持久化排序
 - 增加任务提醒、日历视图和按周计划视图
 - 继续保持数据库表名、列名使用下划线命名
+
+## 前端体验优化状态
+
+2026-06-01 已根据设计审查报告完成一轮 UI/UX 优化。UI/UX 是 User Interface / User Experience 的缩写，分别指用户界面和用户体验；本轮重点是让移动端更可用、让工具型页面更清晰，并降低视觉噪音。
+
+已完成：
+
+- 移动端导航支持横向滚动、当前页高亮和更稳定的触控目标。
+- 核心页面在 390px 移动端视口下已验证无横向溢出，覆盖工作台、笔记、任务、项目、AI 助手和 AI 配置页。
+- 页头已压缩，主操作已移入页头，用户界面不再展示 `SKELETON READY` 和 `DB: OFFLINE` 这类开发状态。
+- 任务和笔记筛选在移动端改为折叠摘要，避免首屏被筛选项占满。
+- 卡片、面板、搜索框和统计卡已做视觉减重，新增更细的阴影层级和语义颜色。
+- AI 配置页改为配置优先，支持预设快速选择、字段级校验、API Key 显示/隐藏、保存反馈和测试连接反馈。
+- 新增 `src/app/icon.svg`，修复首页静态资源 404。
+
+已验证：
+
+- `npm.cmd run typecheck`
+- `npm.cmd run lint`
+- Playwright 390px 移动端横向溢出检查
+
+待实施：
+
+- 补充 375px、414px、横屏和平板断点截图回归。
+- 为当前页高亮、筛选折叠、字段级错误和 AI 测试反馈补端到端断言。
+- 将项目详情页、编辑页、表单页纳入同等深度的移动端视觉检查。
+- 筛选组件后续可升级为带“已选数量”和“清除全部”的抽屉式筛选。
+- 暗色模式暂不建议立即实施，需等当前浅色设计令牌进一步稳定。
+
+完整设计审查和前端优化建议见：
+
+- [.gstack/design-reports/design-audit-local-20260601/design-audit-local.md](./.gstack/design-reports/design-audit-local-20260601/design-audit-local.md)
+- [.gstack/design-reports/design-audit-local-20260601/frontend-optimization-suggestions.md](./.gstack/design-reports/design-audit-local-20260601/frontend-optimization-suggestions.md)

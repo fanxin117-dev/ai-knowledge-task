@@ -11,6 +11,8 @@ export default function AiSettingsPage() {
         description="按你的实际账号和本地模型情况配置 AI API，不再把服务商和模型固定在代码里。"
       />
 
+      <AiProviderSettings />
+
       <ModulePanel
         code="AI-CONFIG"
         title="配置原则"
@@ -20,8 +22,6 @@ export default function AiSettingsPage() {
           "自动测试仍固定使用 mock，避免真实接口费用和网络波动影响回归。",
         ]}
       />
-
-      <AiProviderSettings />
     </main>
   );
 }

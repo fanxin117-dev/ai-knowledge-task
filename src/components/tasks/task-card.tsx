@@ -27,12 +27,12 @@ export function TaskCard({ task }: TaskCardProps) {
   const isDone = task.status === "DONE";
   const updatedDate = task.updatedAt.slice(0, 10);
   const priorityClassName =
-    task.priority === "HIGH" ? "bg-ember" : task.priority === "MEDIUM" ? "bg-accent" : "bg-paper";
+    task.priority === "HIGH" ? "bg-ember" : task.priority === "MEDIUM" ? "bg-warning" : "bg-paper";
 
   return (
-    <article className="rounded-lg border-2 border-line bg-surface p-4 shadow-panel">
+    <article className="min-w-0 rounded-lg border-2 border-line bg-surface p-4 shadow-soft">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-line pb-3">
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="font-[var(--font-mono)] text-xs font-bold text-copper">
             {updatedDate} / {task.project.name}
           </p>
@@ -53,7 +53,7 @@ export function TaskCard({ task }: TaskCardProps) {
         <span
           className={[
             "rounded-md border-2 border-line px-3 py-1.5 font-[var(--font-mono)] text-xs font-black",
-            isDone ? "bg-accent text-ink" : "bg-ember text-ink",
+            isDone ? "bg-success text-ink" : "bg-ember text-ink",
           ].join(" ")}
         >
           {isDone ? "DONE" : "OPEN"}
@@ -63,13 +63,16 @@ export function TaskCard({ task }: TaskCardProps) {
       <p className="mt-3 line-clamp-2 text-sm leading-6 text-muted">{task.description ?? "暂无描述。"}</p>
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex min-w-0 flex-wrap gap-2">
           {task.tags.map((tag) => (
             <TagPill key={tag.id} tag={tag} />
           ))}
         </div>
 
-        <Link href={`/tasks/${task.id}`} className="text-sm font-bold text-blueprint hover:text-ink">
+        <Link
+          href={`/tasks/${task.id}`}
+          className="inline-flex min-h-11 items-center rounded-md px-2 text-sm font-bold text-blueprint hover:text-ink"
+        >
           查看详情
         </Link>
       </div>
