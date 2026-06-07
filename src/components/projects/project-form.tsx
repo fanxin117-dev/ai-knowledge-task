@@ -38,10 +38,26 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     clearErrors();
 
     const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const description = String(formData.get("description") ?? "");
+    const nextFieldErrors: Record<string, string> = {};
+
+    if (!name) {
+      nextFieldErrors.name = "项目名不能为空。";
+    } else if (name.length > 80) {
+      nextFieldErrors.name = "项目名不能超过 80 个字符。";
+    }
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      setFieldErrors(nextFieldErrors);
+      setError("请先补全必填项。");
+      return;
+    }
+
+    setIsSubmitting(true);
     const endpoint = mode === "create" ? "/api/projects" : `/api/projects/${initialProject?.id}`;
     const method = mode === "create" ? "POST" : "PATCH";
 
@@ -51,8 +67,8 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        name: String(formData.get("name") ?? ""),
-        description: String(formData.get("description") ?? ""),
+        name,
+        description,
       }),
     });
     const payload = (await response.json().catch(() => null)) as
@@ -77,22 +93,23 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
       className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">NAME</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">项目名</span>
         <input
           name="name"
           defaultValue={initialProject?.name}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+          aria-invalid={Boolean(fieldErrors.name)}
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
         />
         {fieldErrors.name ? <span className="text-sm font-bold text-ember">{fieldErrors.name}</span> : null}
       </label>
 
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">DESCRIPTION</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">描述</span>
         <textarea
           name="description"
           rows={5}
           defaultValue={initialProject?.description ?? ""}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm leading-6 text-ink shadow-panel"
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
         />
       </label>
 
@@ -101,7 +118,7 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建项目" : "保存项目"}
       </button>

@@ -26,7 +26,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   return (
     <main className="space-y-6">
       <PageHeader
-        eyebrow="Project Detail"
+        eyebrow="项目详情"
         title={project.name}
         description={
           project.isArchived
@@ -56,11 +56,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
       <section className="grid gap-4 md:grid-cols-2">
         <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">OPEN TASKS</p>
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">未完成任务</p>
           <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.openTaskCount}</p>
         </div>
         <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">TOTAL TASKS</p>
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">任务总数</p>
           <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.taskCount}</p>
         </div>
       </section>

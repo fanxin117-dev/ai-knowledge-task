@@ -33,7 +33,7 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
       <div className="relative max-w-full">
         <nav
           aria-label="主导航"
-          className="flex max-w-full snap-x gap-2 overflow-x-auto overscroll-x-contain rounded-lg border-2 border-line bg-surface p-2 shadow-soft [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="flex max-w-full snap-x gap-2 overflow-x-auto overscroll-x-contain rounded-lg border-2 border-line bg-surface p-2 pr-12 shadow-soft [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
         {navItems.map((item) => (
             <Link
@@ -49,7 +49,7 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
             </Link>
         ))}
         </nav>
-        <div className="pointer-events-none absolute inset-y-1 right-1 w-8 bg-gradient-to-l from-surface to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-y-1 right-1 w-12 bg-gradient-to-l from-surface to-transparent" aria-hidden />
       </div>
     );
   }
@@ -57,8 +57,8 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
   return (
     <nav aria-label="主导航" className="rounded-lg border-2 border-line bg-surface p-3 shadow-panel">
       <div className="border-b-2 border-line px-3 py-3">
-        <p className="font-[var(--font-display)] text-xl font-bold text-ink">Knowledge Hub</p>
-        <p className="mt-2 font-[var(--font-mono)] text-xs text-muted">FIELD DESK / MVP-01</p>
+        <p className="font-[var(--font-display)] text-xl font-bold text-ink">知识工作台</p>
+        <p className="mt-2 font-[var(--font-mono)] text-xs text-muted">知识任务 / 第一期</p>
       </div>
 
       <div className="mt-3 space-y-2">

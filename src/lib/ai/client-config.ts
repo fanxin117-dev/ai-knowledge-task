@@ -14,17 +14,17 @@ export type AiConfigPreset = {
 export const AI_CONFIG_PRESETS: AiConfigPreset[] = [
   {
     id: "mock",
-    name: "Mock",
+    name: "本地模拟",
     description: "本地模拟结果，不需要密钥，适合开发和自动测试。",
     config: {
       mode: "mock",
-      label: "Mock",
+      label: "本地模拟",
     },
   },
   {
     id: "openai",
     name: "OpenAI",
-    description: "OpenAI 官方接口，默认使用 Responses API。",
+    description: "OpenAI 官方接口，默认使用响应接口。",
     config: {
       mode: "openai-compatible",
       label: "OpenAI",

@@ -19,7 +19,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex flex-wrap items-start justify-between gap-3 border-b-2 border-line pb-4">
         <div className="min-w-0 flex-1">
           <p className="font-[var(--font-mono)] text-xs font-bold text-copper">
-            UPDATED / {project.updatedAt.slice(0, 10)}
+            更新于 / {project.updatedAt.slice(0, 10)}
           </p>
           <h2 className="mt-2 break-words font-[var(--font-display)] text-2xl font-black leading-tight text-ink">
             {project.name}
@@ -28,7 +28,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex flex-wrap gap-2">
           {project.isArchived ? (
             <span className="rounded-md border-2 border-line bg-paper px-3 py-1.5 font-[var(--font-mono)] text-xs font-black text-muted">
-              ARCHIVED
+              已归档
             </span>
           ) : null}
           <Link
@@ -44,14 +44,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="rounded-md border-2 border-line bg-accent px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
-          OPEN {project.openTaskCount}
+          未完成 {project.openTaskCount}
         </span>
         <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
-          TOTAL {project.taskCount}
+          总数 {project.taskCount}
         </span>
         {project.archivedAt ? (
           <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-muted">
-            ARCHIVED {project.archivedAt.slice(0, 10)}
+            归档于 {project.archivedAt.slice(0, 10)}
           </span>
         ) : null}
       </div>

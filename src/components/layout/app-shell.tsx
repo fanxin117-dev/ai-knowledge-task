@@ -9,7 +9,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="min-h-dvh">
       {/* 移动端保留紧凑品牌栏，确保小屏打开时先看到产品身份和当前实验阶段。 */}
       <header className="border-b-2 border-line bg-ink px-4 py-3 text-surface lg:hidden">
-        <p className="font-[var(--font-mono)] text-xs uppercase">AI Knowledge Task Hub / MVP-01</p>
+        <p className="font-[var(--font-mono)] text-xs">AI 知识任务工作台 / 第一期</p>
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl gap-0 px-3 py-4 sm:px-4 lg:gap-6 lg:px-6 lg:py-6">

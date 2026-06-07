@@ -28,6 +28,7 @@ export function TaskCard({ task }: TaskCardProps) {
   const updatedDate = task.updatedAt.slice(0, 10);
   const priorityClassName =
     task.priority === "HIGH" ? "bg-ember" : task.priority === "MEDIUM" ? "bg-warning" : "bg-paper";
+  const priorityLabel = task.priority === "HIGH" ? "高" : task.priority === "MEDIUM" ? "中" : "低";
 
   return (
     <article className="min-w-0 rounded-lg border-2 border-line bg-surface p-4 shadow-soft">
@@ -38,11 +39,11 @@ export function TaskCard({ task }: TaskCardProps) {
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             <span className={`rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink ${priorityClassName}`}>
-              {task.priority}
+              优先级：{priorityLabel}
             </span>
             {task.dueAt ? (
               <span className={`rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black ${task.isOverdue ? "bg-ember text-ink" : "bg-paper text-muted"}`}>
-                DUE {task.dueAt.slice(0, 10)}
+                截止：{task.dueAt.slice(0, 10)}
               </span>
             ) : null}
           </div>
@@ -56,7 +57,7 @@ export function TaskCard({ task }: TaskCardProps) {
             isDone ? "bg-success text-ink" : "bg-ember text-ink",
           ].join(" ")}
         >
-          {isDone ? "DONE" : "OPEN"}
+          {isDone ? "已完成" : "未完成"}
         </span>
       </div>
 

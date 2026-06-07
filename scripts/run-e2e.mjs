@@ -68,6 +68,7 @@ async function run() {
     env: {
       ...process.env,
       AI_PROVIDER: "mock",
+      NEXT_DIST_DIR: ".next-e2e",
     },
   });
 

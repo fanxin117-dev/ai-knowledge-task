@@ -39,10 +39,28 @@ export function TagForm({ mode, initialTag }: TagFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     clearErrors();
 
     const formData = new FormData(event.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const color = String(formData.get("color") ?? "");
+    const nextFieldErrors: Record<string, string> = {};
+
+    if (!name) {
+      nextFieldErrors.name = "标签名不能为空。";
+    }
+
+    if (color && !/^#[0-9a-fA-F]{6}$/.test(color)) {
+      nextFieldErrors.color = "颜色必须是 6 位十六进制颜色值。";
+    }
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      setFieldErrors(nextFieldErrors);
+      setError("请先补全必填项。");
+      return;
+    }
+
+    setIsSubmitting(true);
     const endpoint = mode === "create" ? "/api/tags" : `/api/tags/${initialTag?.id}`;
     const method = mode === "create" ? "POST" : "PATCH";
 
@@ -52,8 +70,8 @@ export function TagForm({ mode, initialTag }: TagFormProps) {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        name: String(formData.get("name") ?? ""),
-        color: String(formData.get("color") ?? ""),
+        name,
+        color,
       }),
     });
 
@@ -79,17 +97,18 @@ export function TagForm({ mode, initialTag }: TagFormProps) {
       className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">NAME</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标签名</span>
         <input
           name="name"
           defaultValue={initialTag?.name}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+          aria-invalid={Boolean(fieldErrors.name)}
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
         />
         {fieldErrors.name ? <span className="text-sm font-bold text-ember">{fieldErrors.name}</span> : null}
       </label>
 
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">COLOR</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">颜色</span>
         <input
           name="color"
           type="color"
@@ -104,7 +123,7 @@ export function TagForm({ mode, initialTag }: TagFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建标签" : "保存标签"}
       </button>

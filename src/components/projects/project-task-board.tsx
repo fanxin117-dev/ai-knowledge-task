@@ -36,6 +36,18 @@ const priorityWeight = {
   LOW: 1,
 };
 
+function priorityLabel(priority: BoardTask["priority"]) {
+  if (priority === "HIGH") {
+    return "高";
+  }
+
+  if (priority === "MEDIUM") {
+    return "中";
+  }
+
+  return "低";
+}
+
 function compareTasks(a: BoardTask, b: BoardTask, sortMode: SortMode) {
   if (sortMode === "due" || sortMode === "smart") {
     const dueA = a.dueAt ? new Date(a.dueAt).getTime() : Number.POSITIVE_INFINITY;
@@ -101,15 +113,15 @@ function BoardColumn({
                   />
                   <div className="min-w-0">
                   <p className="font-[var(--font-mono)] text-xs font-bold text-copper">
-                    UPDATED / {task.updatedAt.slice(0, 10)}
+                    更新于 / {task.updatedAt.slice(0, 10)}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
-                      {task.priority}
+                      优先级：{priorityLabel(task.priority)}
                     </span>
                     {task.dueAt ? (
                       <span className={`rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black ${task.isOverdue ? "bg-ember text-ink" : "bg-surface text-muted"}`}>
-                        DUE {task.dueAt.slice(0, 10)}
+                        截止：{task.dueAt.slice(0, 10)}
                       </span>
                     ) : null}
                   </div>
@@ -200,7 +212,7 @@ export function ProjectTaskBoard({ openTasks, doneTasks }: ProjectTaskBoardProps
     <section className="space-y-4" aria-label="项目任务看板">
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border-2 border-line bg-paper p-4 shadow-panel">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">SORT</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">排序</span>
           <select
             value={sortMode}
             onChange={(event) => setSortMode(event.target.value as SortMode)}
@@ -214,7 +226,7 @@ export function ProjectTaskBoard({ openTasks, doneTasks }: ProjectTaskBoardProps
         </label>
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-[var(--font-mono)] text-xs font-bold text-muted">
-            SELECTED {selectedTaskIds.size}
+            已选择 {selectedTaskIds.size}
           </span>
           <button
             type="button"

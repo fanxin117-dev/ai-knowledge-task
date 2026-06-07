@@ -15,7 +15,7 @@ export function SearchForm({ action, placeholder, defaultQuery, hiddenFields }: 
         : null}
 
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">SEARCH</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">搜索</span>
         <input
           type="search"
           name="q"

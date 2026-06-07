@@ -6,15 +6,15 @@ export default function AiPage() {
   return (
     <main className="space-y-6">
       <PageHeader
-        eyebrow="AI Provider"
+        eyebrow="AI 服务"
         title="AI 助手"
-        description="摘要生成、行动项提取和行动项转任务已经统一走 AI provider，可通过环境变量在 mock 和 OpenAI 之间切换。"
+        description="摘要生成、行动项提取和行动项转任务已经统一走 AI 服务，可按需要在本地模拟和 OpenAI 之间切换。"
       />
 
       <ModulePanel
-        code="AI-SPEC"
+        code="AI 说明"
         title="AI 接入原则"
-        items={["默认使用 mock provider，保证流程可测试且不依赖密钥。", "OpenAI provider 使用 Responses API 和结构化 JSON 输出，减少解析不确定性。", "AI 输出会保存为结构化结果，避免只停留在界面文本。"]}
+        items={["默认使用本地模拟服务，保证流程可测试且不依赖密钥。", "OpenAI 服务使用响应接口和结构化数据输出，减少解析不确定性。", "AI 输出会保存为结构化结果，避免只停留在界面文本。"]}
       />
 
       <EmptyState

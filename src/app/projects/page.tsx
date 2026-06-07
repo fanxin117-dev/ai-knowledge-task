@@ -26,7 +26,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   return (
     <main className="space-y-6">
       <PageHeader
-        eyebrow="Projects"
+        eyebrow="项目"
         title="项目"
         description="项目是任务的上层归属，一个具体项目下可以管理一组任务。"
         actions={
@@ -58,7 +58,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
       </div>
 
       <ModulePanel
-        code="PROJECT-SPEC"
+        code="项目说明"
         title="项目管理原则"
         items={[
           "任务必须属于一个项目，默认项目是收件箱。",

@@ -28,13 +28,13 @@ function toRuntimeConfig(config: EditableConfig): AiRuntimeConfig {
   if (config.mode === "mock") {
     return {
       mode: "mock",
-      label: config.label || "Mock",
+      label: config.label || "本地模拟",
     };
   }
 
   return {
     mode: "openai-compatible",
-    label: config.label || "Custom",
+    label: config.label || "自定义",
     baseUrl: config.baseUrl.trim(),
     apiKey: config.apiKey.trim() || undefined,
     model: config.model.trim(),
@@ -56,7 +56,7 @@ function validateConfig(config: EditableConfig): FieldErrors {
   const errors: FieldErrors = {};
 
   if (!/^https?:\/\//i.test(config.baseUrl.trim())) {
-    errors.baseUrl = "Base URL 需要以 http:// 或 https:// 开头。";
+    errors.baseUrl = "接口地址需要以 http:// 或 https:// 开头。";
   }
 
   if (config.model.trim().length === 0) {
@@ -144,7 +144,7 @@ export function AiProviderSettings() {
   async function testConnection() {
     if (!canSave) {
       revealBlockingErrors();
-      setTestResult({ tone: "error", text: "请先修正 Base URL 和 Model，再测试连接。" });
+      setTestResult({ tone: "error", text: "请先修正接口地址和模型名称，再测试连接。" });
       return;
     }
 
@@ -176,7 +176,7 @@ export function AiProviderSettings() {
           : "";
         setTestResult({
           tone: "error",
-          text: `${payload?.error?.message ?? "连接测试失败。"}${detailText} 请检查 Base URL、模型名称和 API Key 是否匹配。`,
+          text: `${payload?.error?.message ?? "连接测试失败。"}${detailText} 请检查接口地址、模型名称和接口密钥是否匹配。`,
         });
         return;
       }
@@ -201,7 +201,7 @@ export function AiProviderSettings() {
     <section className="space-y-5 rounded-lg border-2 border-line bg-paper p-4 shadow-soft md:p-6">
       <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(12rem,18rem)] md:items-end">
         <div>
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">AI CONFIG</p>
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">AI 配置</p>
           <h2 className="mt-2 font-[var(--font-display)] text-2xl font-black leading-tight text-ink">连接参数</h2>
           <p className="mt-2 text-sm leading-6 text-muted">先确认运行模式和模型参数，再保存或测试连接。</p>
         </div>
@@ -228,19 +228,19 @@ export function AiProviderSettings() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">MODE</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">运行模式</span>
           <select
             value={config.mode}
             onChange={(event) => updateField("mode", event.target.value as EditableConfig["mode"])}
             className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control md:text-sm"
           >
-            <option value="mock">mock</option>
-            <option value="openai-compatible">openai-compatible</option>
+            <option value="mock">本地模拟</option>
+            <option value="openai-compatible">兼容 OpenAI 接口</option>
           </select>
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">LABEL</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">配置名称</span>
           <input
             value={config.label}
             onChange={(event) => updateField("label", event.target.value)}
@@ -252,7 +252,7 @@ export function AiProviderSettings() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">BASE URL</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口地址</span>
           <input
             value={config.baseUrl}
             disabled={isMock}
@@ -267,7 +267,7 @@ export function AiProviderSettings() {
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">MODEL</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">模型名称</span>
           <input
             value={config.model}
             disabled={isMock}
@@ -284,20 +284,20 @@ export function AiProviderSettings() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">API STYLE</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口风格</span>
           <select
             value={config.apiStyle}
             disabled={isMock}
             onChange={(event) => updateField("apiStyle", event.target.value as AiApiStyle)}
             className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           >
-            <option value="chat-completions">chat-completions</option>
-            <option value="responses">responses</option>
+            <option value="chat-completions">聊天补全接口</option>
+            <option value="responses">响应接口</option>
           </select>
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">API KEY</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口密钥</span>
           <div className="flex gap-2">
             <input
               value={config.apiKey}
@@ -320,7 +320,7 @@ export function AiProviderSettings() {
       </div>
 
       <div className="rounded-lg border-2 border-line bg-surface p-4 text-sm leading-6 text-muted shadow-control">
-        API Key 只保存到当前浏览器的 localStorage，不写入 PostgreSQL。多人共用电脑时，请不要保存自己的生产密钥。
+        接口密钥只保存到当前浏览器的本地存储，不写入服务端数据库。多人共用电脑时，请不要保存自己的生产密钥。
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -349,7 +349,7 @@ export function AiProviderSettings() {
 
       <details className="rounded-lg border-2 border-line bg-surface p-4 shadow-control">
         <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-bold text-ink">
-          <span className="font-[var(--font-mono)] text-xs text-copper">PROVIDER PRESETS</span>
+          <span className="font-[var(--font-mono)] text-xs text-copper">服务商预设</span>
           <span className="text-sm text-muted">查看预设说明</span>
         </summary>
         <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">

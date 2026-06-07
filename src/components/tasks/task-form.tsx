@@ -81,10 +81,31 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     clearErrors();
 
     const formData = new FormData(event.currentTarget);
+    const title = String(formData.get("title") ?? "").trim();
+    const description = String(formData.get("description") ?? "");
+    const dueAt = String(formData.get("dueAt") ?? "");
+    const projectId = String(formData.get("projectId") ?? "");
+    const sourceNoteId = String(formData.get("sourceNoteId") ?? "");
+    const nextFieldErrors: Record<string, string> = {};
+
+    if (!title) {
+      nextFieldErrors.title = "标题不能为空。";
+    }
+
+    if (dueAt && Number.isNaN(new Date(`${dueAt}T00:00:00.000Z`).getTime())) {
+      nextFieldErrors.dueAt = "截止日期格式不正确。";
+    }
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      setFieldErrors(nextFieldErrors);
+      setError("请先补全必填项。");
+      return;
+    }
+
+    setIsSubmitting(true);
     const endpoint = mode === "create" ? "/api/tasks" : `/api/tasks/${initialTask?.id}`;
     const method = mode === "create" ? "POST" : "PATCH";
 
@@ -94,13 +115,13 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        title: String(formData.get("title") ?? ""),
-        description: String(formData.get("description") ?? ""),
+        title,
+        description,
         status: String(formData.get("status") ?? TaskStatus.OPEN),
         priority: String(formData.get("priority") ?? TaskPriority.MEDIUM),
-        dueAt: String(formData.get("dueAt") ?? ""),
-        projectId: String(formData.get("projectId") ?? ""),
-        sourceNoteId: String(formData.get("sourceNoteId") ?? ""),
+        dueAt,
+        projectId,
+        sourceNoteId,
         tagIds: [...selectedTagIds],
       }),
     });
@@ -127,32 +148,33 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
       className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">TITLE</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标题</span>
         <input
           name="title"
           defaultValue={initialTask?.title}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+          aria-invalid={Boolean(fieldErrors.title)}
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
         />
         {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
       </label>
 
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">DESCRIPTION</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">描述</span>
         <textarea
           name="description"
           rows={5}
           defaultValue={initialTask?.description ?? ""}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm leading-6 text-ink shadow-panel"
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
         />
       </label>
 
-      <div className="grid gap-4 md:grid-cols-5">
-        <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">PROJECT</span>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <label className="grid min-w-0 gap-2">
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">项目</span>
           <select
             name="projectId"
             defaultValue={initialTask?.projectId ?? projects[0]?.id ?? ""}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
           >
             {projects.map((project) => (
               <option key={project.id} value={project.id}>
@@ -162,48 +184,49 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
           </select>
         </label>
 
-        <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">STATUS</span>
+        <label className="grid min-w-0 gap-2">
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">状态</span>
           <select
             name="status"
             defaultValue={initialTask?.status ?? TaskStatus.OPEN}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
           >
-            <option value={TaskStatus.OPEN}>OPEN</option>
-            <option value={TaskStatus.DONE}>DONE</option>
+            <option value={TaskStatus.OPEN}>未完成</option>
+            <option value={TaskStatus.DONE}>已完成</option>
           </select>
         </label>
 
-        <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">PRIORITY</span>
+        <label className="grid min-w-0 gap-2">
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">优先级</span>
           <select
             name="priority"
             defaultValue={initialTask?.priority ?? TaskPriority.MEDIUM}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
           >
-            <option value={TaskPriority.HIGH}>HIGH</option>
-            <option value={TaskPriority.MEDIUM}>MEDIUM</option>
-            <option value={TaskPriority.LOW}>LOW</option>
+            <option value={TaskPriority.HIGH}>高</option>
+            <option value={TaskPriority.MEDIUM}>中</option>
+            <option value={TaskPriority.LOW}>低</option>
           </select>
         </label>
 
-        <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">DUE DATE</span>
+        <label className="grid min-w-0 gap-2">
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">截止日期</span>
           <input
             type="date"
             name="dueAt"
             defaultValue={initialTask?.dueAt?.slice(0, 10) ?? ""}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            aria-invalid={Boolean(fieldErrors.dueAt)}
+            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
           />
           {fieldErrors.dueAt ? <span className="text-sm font-bold text-ember">{fieldErrors.dueAt}</span> : null}
         </label>
 
-        <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">SOURCE NOTE</span>
+        <label className="grid min-w-0 gap-2 md:col-span-2 xl:col-span-1">
+          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">来源笔记</span>
           <select
             name="sourceNoteId"
             defaultValue={initialTask?.sourceNoteId ?? ""}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
           >
             <option value="">无来源笔记</option>
             {notes.map((note) => (
@@ -216,7 +239,7 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
       </div>
 
       <fieldset className="space-y-3">
-        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">TAGS</legend>
+        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">标签</legend>
         <div className="flex flex-wrap gap-3">
           {tags.map((tag) => (
             <label key={tag.id} className="cursor-pointer">
@@ -239,7 +262,7 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建任务" : "保存任务"}
       </button>

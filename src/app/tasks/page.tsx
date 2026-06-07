@@ -66,7 +66,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
       active: !priority,
     },
     ...[TaskPriority.HIGH, TaskPriority.MEDIUM, TaskPriority.LOW].map((item) => ({
-      label: item,
+      label: item === TaskPriority.HIGH ? "高" : item === TaskPriority.MEDIUM ? "中" : "低",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, overdue: overdue ? "true" : undefined, priority: item }),
       active: priority === item,
     })),
@@ -114,7 +114,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   return (
     <main className="space-y-6">
       <PageHeader
-        eyebrow="Tasks"
+        eyebrow="任务"
         title="任务"
         description="任务列表已切换到 PostgreSQL 数据源，并支持标题搜索、状态筛选和标签筛选。"
         actions={
@@ -135,15 +135,15 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
       />
 
       <div className="space-y-3">
-        <FilterRail label="PROJECT" items={projectFilters} />
-        <FilterRail label="STATUS" items={statusFilters} />
-        <FilterRail label="PRIORITY" items={priorityFilters} />
-        <FilterRail label="DUE" items={dueFilters} />
-        <FilterRail label="TAG" items={tagFilters} />
+        <FilterRail label="项目" items={projectFilters} />
+        <FilterRail label="状态" items={statusFilters} />
+        <FilterRail label="优先级" items={priorityFilters} />
+        <FilterRail label="截止日期" items={dueFilters} />
+        <FilterRail label="标签" items={tagFilters} />
       </div>
 
       <ModulePanel
-        code="TASK-SPEC"
+        code="任务说明"
         title="任务页当前能力"
         items={["任务必须归属到项目，避免行动项散落在全局列表。", "任务支持优先级、截止日期和逾期筛选，便于先处理最紧急事项。", "项目、状态、优先级、逾期、标签和关键词可以组合筛选。"]}
       />

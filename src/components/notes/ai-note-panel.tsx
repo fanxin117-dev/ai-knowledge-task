@@ -69,7 +69,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
     latestSummary?.createdAt ?? latestActions?.createdAt ?? null,
   );
   const [lastOperation, setLastOperation] = useState<Operation | null>(null);
-  const [aiConfig, setAiConfig] = useState<AiRuntimeConfig>({ mode: "mock", label: "Mock" });
+  const [aiConfig, setAiConfig] = useState<AiRuntimeConfig>({ mode: "mock", label: "本地模拟" });
   const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState(noteTitle);
   const [activeOperation, setActiveOperation] = useState<Operation | null>(null);
@@ -162,7 +162,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
       );
       if (data.items.length === 0) {
         setItems([]);
-        setNotice({ kind: "info", text: "没有提取到行动项。可以补充更明确的 TODO、下一步或验证事项后重试。" });
+        setNotice({ kind: "info", text: "没有提取到行动项。可以补充更明确的待办事项、下一步或验证事项后重试。" });
         return;
       }
 
@@ -222,10 +222,10 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
   return (
     <section className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-line pb-3">
-        <h2 className="font-[var(--font-display)] text-2xl font-black text-ink">AI provider workspace</h2>
+        <h2 className="font-[var(--font-display)] text-2xl font-black text-ink">AI 工作区</h2>
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-md border-2 border-line bg-accent px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
-            {aiConfig.mode === "mock" ? "MOCK" : aiConfig.label || "CUSTOM"}
+            {aiConfig.mode === "mock" ? "本地模拟" : aiConfig.label || "自定义"}
           </span>
           <Link href="/settings/ai" className="text-sm font-bold text-blueprint hover:text-ink">
             配置
@@ -262,13 +262,13 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
 
       {lastSavedAt ? (
         <p className="mt-4 font-[var(--font-mono)] text-xs font-bold text-muted">
-          LAST SAVED / {lastSavedAt.slice(0, 19).replace("T", " ")}
+          最近保存 / {lastSavedAt.slice(0, 19).replace("T", " ")}
         </p>
       ) : null}
 
       {summary ? (
         <div className="mt-4 rounded-md border-2 border-line bg-paper p-4">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">SAVED SUMMARY</p>
+          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">已保存摘要</p>
           <p className="mt-2 text-sm leading-6 text-muted">{summary}</p>
         </div>
       ) : (

@@ -16,7 +16,7 @@ export default function AppErrorPage({ error, reset }: AppErrorPageProps) {
   return (
     <main className="space-y-6">
       <section className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
-        <p className="font-[var(--font-mono)] text-xs font-bold text-ember">RUNTIME ERROR</p>
+        <p className="font-[var(--font-mono)] text-xs font-bold text-ember">运行时错误</p>
         <h1 className="mt-3 font-[var(--font-display)] text-4xl font-black text-ink">页面暂时无法渲染</h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
           当前页面遇到运行时错误。你可以先重试当前页面；如果刚刚修改了数据库或代码，请重新启动开发服务器后再访问。

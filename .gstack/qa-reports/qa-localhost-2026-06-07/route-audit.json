@@ -1,0 +1,881 @@
+[
+  {
+    "route": "/",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI Knowledge Task Hub"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [],
+    "overflowing": [
+      {
+        "tag": "P",
+        "text": "AI Knowledge Task Hub MVP 开发计划 1. 项目目标 AI Knowledge Task Hub 是一个用于学习 vibe coding",
+        "width": 390,
+        "scrollWidth": 541,
+        "className": "mt-4 line-clamp-3 text-sm leading-6 text-muted"
+      }
+    ],
+    "unlabeledInputs": [],
+    "interactiveCount": 11
+  },
+  {
+    "route": "/notes",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "笔记"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "AI",
+        "width": 42,
+        "height": 44
+      }
+    ],
+    "overflowing": [
+      {
+        "tag": "P",
+        "text": "AI Knowledge Task Hub MVP 开发计划 1. 项目目标 AI Knowledge Task Hub 是一个用于学习 vibe coding",
+        "width": 390,
+        "scrollWidth": 541,
+        "className": "mt-4 line-clamp-3 text-sm leading-6 text-muted"
+      }
+    ],
+    "unlabeledInputs": [],
+    "interactiveCount": 20
+  },
+  {
+    "route": "/tasks",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "任务"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "AI",
+        "width": 42,
+        "height": 44
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 34
+  },
+  {
+    "route": "/projects",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "项目"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 12
+  },
+  {
+    "route": "/tags",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "标签"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "新建标签",
+        "width": 92,
+        "height": 40
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 14
+  },
+  {
+    "route": "/ai",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI 助手"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "查看笔记",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 8
+  },
+  {
+    "route": "/settings/ai",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI 接口配置"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 24
+  },
+  {
+    "route": "/notes/new",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建笔记"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "title",
+        "width": 832,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建笔记",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 16
+  },
+  {
+    "route": "/tasks/new",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建任务"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "title",
+        "width": 832,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "收件箱",
+        "width": 154,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "OPEN\nDONE",
+        "width": 154,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "HIGH\nMEDIUM\nLOW",
+        "width": 154,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "dueAt",
+        "width": 154,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "无来源笔记\n开发流程\nvibe coding 学习节奏\n知识任务系统数据模型\nMVP 范围控制",
+        "width": 168,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建任务",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [
+      {
+        "tag": "DIV",
+        "text": "PROJECT\n收件箱\nSTATUS\nOPEN\nDONE\nPRIORITY\nHIGH\nMEDIUM\nLOW\nDUE DATE\nSOURCE NOTE\n无来源笔记",
+        "width": 832,
+        "scrollWidth": 846,
+        "className": "grid gap-4 md:grid-cols-5"
+      },
+      {
+        "tag": "LABEL",
+        "text": "SOURCE NOTE\n无来源笔记\n开发流程\nvibe coding 学习节奏\n知识任务系统数据模型\nMVP 范围控制",
+        "width": 154,
+        "scrollWidth": 168,
+        "className": "grid gap-2"
+      }
+    ],
+    "unlabeledInputs": [],
+    "interactiveCount": 21
+  },
+  {
+    "route": "/projects/new",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建项目"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "name",
+        "width": 832,
+        "height": 40
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建项目",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 10
+  },
+  {
+    "route": "/tags/new",
+    "viewportName": "desktop",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建标签"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 1440,
+    "docScrollWidth": 1440,
+    "bodyScrollWidth": 1440,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "name",
+        "width": 832,
+        "height": 40
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建标签",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 10
+  },
+  {
+    "route": "/",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI Knowledge Task Hub"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [],
+    "overflowing": [
+      {
+        "tag": "P",
+        "text": "AI Knowledge Task Hub MVP 开发计划 1. 项目目标 AI Knowledge Task Hub 是一个用于学习 vibe coding",
+        "width": 294,
+        "scrollWidth": 541,
+        "className": "mt-4 line-clamp-3 text-sm leading-6 text-muted"
+      }
+    ],
+    "unlabeledInputs": [],
+    "interactiveCount": 11
+  },
+  {
+    "route": "/notes",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "笔记"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "A",
+        "width": 42,
+        "height": 44
+      }
+    ],
+    "overflowing": [
+      {
+        "tag": "P",
+        "text": "AI Knowledge Task Hub MVP 开发计划 1. 项目目标 AI Knowledge Task Hub 是一个用于学习 vibe coding",
+        "width": 294,
+        "scrollWidth": 541,
+        "className": "mt-4 line-clamp-3 text-sm leading-6 text-muted"
+      }
+    ],
+    "unlabeledInputs": [],
+    "interactiveCount": 21
+  },
+  {
+    "route": "/tasks",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "任务"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "A",
+        "width": 42,
+        "height": 44
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 39
+  },
+  {
+    "route": "/projects",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "项目"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 12
+  },
+  {
+    "route": "/tags",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "标签"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "新建标签",
+        "width": 92,
+        "height": 40
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      },
+      {
+        "tag": "A",
+        "label": "编辑",
+        "width": 28,
+        "height": 20
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 14
+  },
+  {
+    "route": "/ai",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI 助手"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "A",
+        "label": "查看笔记",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 8
+  },
+  {
+    "route": "/settings/ai",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "AI 接口配置"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 24
+  },
+  {
+    "route": "/notes/new",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建笔记"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "title",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建笔记",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 16
+  },
+  {
+    "route": "/tasks/new",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建任务"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "title",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "收件箱",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "OPEN\nDONE",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "HIGH\nMEDIUM\nLOW",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "dueAt",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "SELECT",
+        "label": "无来源笔记\n开发流程\nvibe coding 学习节奏\n知识任务系统数据模型\nMVP 范围控制",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "INPUT",
+        "label": "INPUT",
+        "width": 1,
+        "height": 1
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建任务",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 21
+  },
+  {
+    "route": "/projects/new",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建项目"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "name",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建项目",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 10
+  },
+  {
+    "route": "/tags/new",
+    "viewportName": "mobile",
+    "status": 200,
+    "errors": [],
+    "title": "AI Knowledge Task Hub",
+    "h1": [
+      "新建标签"
+    ],
+    "horizontalOverflow": false,
+    "viewportWidth": 390,
+    "docScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "smallTargets": [
+      {
+        "tag": "INPUT",
+        "label": "name",
+        "width": 278,
+        "height": 40
+      },
+      {
+        "tag": "BUTTON",
+        "label": "创建标签",
+        "width": 92,
+        "height": 40
+      }
+    ],
+    "overflowing": [],
+    "unlabeledInputs": [],
+    "interactiveCount": 10
+  }
+]

@@ -64,10 +64,28 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     clearErrors();
 
     const formData = new FormData(event.currentTarget);
+    const title = String(formData.get("title") ?? "").trim();
+    const content = String(formData.get("content") ?? "").trim();
+    const nextFieldErrors: Record<string, string> = {};
+
+    if (!title) {
+      nextFieldErrors.title = "标题不能为空。";
+    }
+
+    if (!content) {
+      nextFieldErrors.content = "正文不能为空。";
+    }
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      setFieldErrors(nextFieldErrors);
+      setError("请先补全必填项。");
+      return;
+    }
+
+    setIsSubmitting(true);
     const endpoint = mode === "create" ? "/api/notes" : `/api/notes/${initialNote?.id}`;
     const method = mode === "create" ? "POST" : "PATCH";
 
@@ -77,8 +95,8 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        title: String(formData.get("title") ?? ""),
-        content: String(formData.get("content") ?? ""),
+        title,
+        content,
         tagIds: [...selectedTagIds],
       }),
     });
@@ -106,22 +124,24 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
       className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">TITLE</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标题</span>
         <input
           name="title"
           defaultValue={initialNote?.title}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+          aria-invalid={Boolean(fieldErrors.title)}
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
         />
         {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
       </label>
 
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">CONTENT</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">正文</span>
         <textarea
           name="content"
           rows={8}
           defaultValue={initialNote?.content}
-          className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm leading-6 text-ink shadow-panel"
+          aria-invalid={Boolean(fieldErrors.content)}
+          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
         />
         {fieldErrors.content ? (
           <span className="text-sm font-bold text-ember">{fieldErrors.content}</span>
@@ -129,7 +149,7 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
       </label>
 
       <fieldset className="space-y-3">
-        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">TAGS</legend>
+        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">标签</legend>
         <div className="flex flex-wrap gap-3">
           {tags.map((tag) => (
             <label key={tag.id} className="cursor-pointer">
@@ -152,7 +172,7 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建笔记" : "保存笔记"}
       </button>

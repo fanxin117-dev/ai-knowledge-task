@@ -32,7 +32,7 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
   return (
     <main className="space-y-6">
       <PageHeader
-        eyebrow="Notes"
+        eyebrow="笔记"
         title="笔记"
         description="笔记列表已切换到 PostgreSQL 数据源，并支持标题、正文关键词搜索和标签筛选。"
         actions={
@@ -52,10 +52,10 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
         hiddenFields={{ tag: tagId }}
       />
 
-      <FilterRail label="TAG" items={tagFilters} />
+      <FilterRail label="标签" items={tagFilters} />
 
       <ModulePanel
-        code="NOTE-SPEC"
+        code="笔记说明"
         title="笔记页当前能力"
         items={["列表和详情已分离，避免单页承载过多状态。", "搜索由服务层转换成数据库查询，后续 API 可复用同一逻辑。", "AI 摘要入口只出现在笔记详情页，减少误触。"]}
       />
