@@ -69,6 +69,7 @@ test("笔记到 AI 行动项再到任务的主流程可用", async ({ page, requ
   ].join("\n");
   let noteId: string | null = null;
   let tagId: string | null = null;
+  const editedActionTitle = `${runId} 人工修正后的行动项任务`;
   const editedTaskTitle = `${runId} 编辑后的任务`;
 
   try {
@@ -106,9 +107,9 @@ test("笔记到 AI 行动项再到任务的主流程可用", async ({ page, requ
 
     await page.getByRole("button", { name: "提取行动项" }).click();
     await expect(page.getByText(/已由 本地模拟 提取并保存 \d+ 个行动项/)).toBeVisible();
-    await expect(
-      page.getByRole("listitem").filter({ hasText: `待办事项：完成 ${runId} 的端到端测试` }),
-    ).toBeVisible();
+    await expect(page.getByLabel("任务标题").first()).toHaveValue(`待办事项：完成 ${runId} 的端到端测试`);
+    await page.getByLabel("任务标题").first().fill(editedActionTitle);
+    await page.getByLabel("任务描述").first().fill("这条描述来自行动项转任务前的人工修正。");
 
     await page.getByRole("button", { name: "行动项转任务" }).click();
     await expect(page.getByText(/已同步 \d+ 个任务到项目/)).toBeVisible();
@@ -118,11 +119,20 @@ test("笔记到 AI 行动项再到任务的主流程可用", async ({ page, requ
     await expect(page.getByText(`《${noteTitle}》摘要：`)).toBeVisible();
 
     await page.goto(`/tasks?q=${encodeURIComponent(runId)}`);
-    const generatedTask = page.locator("article").filter({ hasText: runId }).first();
+    const generatedTask = page.locator("article").filter({ hasText: editedActionTitle }).first();
     await expect(generatedTask).toBeVisible();
     await generatedTask.getByRole("link", { name: "查看详情" }).click();
+    await page.waitForURL(/\/tasks\/[^/?]+$/);
     await expect(page.getByRole("heading", { name: new RegExp(runId) })).toBeVisible();
+    const generatedTaskDetailUrl = page.url();
 
+    await page.goto(`/search?q=${encodeURIComponent(runId)}`);
+    await expect(page.getByRole("heading", { name: "笔记", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "任务", exact: true })).toBeVisible();
+    await expect(page.getByText(noteTitle).first()).toBeVisible();
+    await expect(page.getByText(editedActionTitle).first()).toBeVisible();
+
+    await page.goto(generatedTaskDetailUrl);
     await page.getByRole("link", { name: "编辑任务" }).click();
     await page.getByLabel("标题").fill(editedTaskTitle);
     await page.getByLabel("描述").fill("这条任务用于验证编辑、标签筛选和逾期提示。");
@@ -137,7 +147,7 @@ test("笔记到 AI 行动项再到任务的主流程可用", async ({ page, requ
     await page.goto(`/tasks?tag=${tagId}`);
     await expect(page.locator("article").filter({ hasText: editedTaskTitle })).toBeVisible();
 
-    await page.goto(`/tasks?overdue=true&q=${encodeURIComponent(runId)}`);
+    await page.goto(`/tasks?due=overdue&q=${encodeURIComponent(runId)}`);
     await expect(page.locator("article").filter({ hasText: editedTaskTitle })).toBeVisible();
 
     const projectsResponse = await request.get("/api/projects?view=all");

@@ -300,6 +300,7 @@ describe("核心 CRUD API", () => {
         title: `${runId} 任务`,
         description: "这是一条用于验证任务 CRUD 的任务。",
         status: "OPEN",
+        dueAt: "2020-01-01",
         sourceNoteId: notePayload.data.id,
         tagIds: [tagPayload.data.id],
       }),
@@ -322,6 +323,16 @@ describe("核心 CRUD API", () => {
 
     expect(listTaskResponse.status).toBe(200);
     expect(listTaskPayload.data.some((task) => task.id === taskPayload.data.id)).toBe(true);
+
+    const overdueTaskResponse = await listTasks(
+      new Request(`http://localhost/api/tasks?q=${encodeURIComponent(runId)}&due=overdue`),
+    );
+    const overdueTaskPayload = (await readJson(overdueTaskResponse)) as {
+      data: Array<{ id: string }>;
+    };
+
+    expect(overdueTaskResponse.status).toBe(200);
+    expect(overdueTaskPayload.data.some((task) => task.id === taskPayload.data.id)).toBe(true);
 
     const updatedTaskResponse = await patchTask(
       patchRequest(`http://localhost/api/tasks/${taskPayload.data.id}`, {

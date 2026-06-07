@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { TaskPriority, TaskStatus } from "@/generated/prisma/enums";
 import { apiErrorResponse } from "@/lib/api/error";
 import { readJsonBody } from "@/lib/api/request";
-import { createTask, listTasks } from "@/lib/api/services";
+import { createTask, listTasks, type TaskDueScope } from "@/lib/api/services";
 import { parseTaskInput } from "@/lib/api/validation";
 
 function readTaskStatus(value: string | null) {
@@ -21,6 +21,14 @@ function readTaskPriority(value: string | null) {
   return undefined;
 }
 
+function readTaskDueScope(value: string | null): TaskDueScope | undefined {
+  if (value === "overdue" || value === "today" || value === "week") {
+    return value;
+  }
+
+  return undefined;
+}
+
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
@@ -29,6 +37,7 @@ export async function GET(request: Request) {
       tagId: url.searchParams.get("tag") ?? undefined,
       status: readTaskStatus(url.searchParams.get("status")),
       priority: readTaskPriority(url.searchParams.get("priority")),
+      due: readTaskDueScope(url.searchParams.get("due")),
       overdue: url.searchParams.get("overdue") === "true",
       projectId: url.searchParams.get("project") ?? undefined,
     });

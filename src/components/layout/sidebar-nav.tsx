@@ -9,12 +9,13 @@ type SidebarNavProps = {
 
 const navItems = [
   { href: "/", label: "工作台", description: "概览和快捷入口", code: "00" },
-  { href: "/notes", label: "笔记", description: "知识记录", code: "01" },
-  { href: "/projects", label: "项目", description: "任务归属", code: "02" },
-  { href: "/tasks", label: "任务", description: "行动管理", code: "03" },
-  { href: "/tags", label: "标签", description: "内容组织", code: "04" },
-  { href: "/ai", label: "AI 助手", description: "摘要与行动项", code: "05" },
-  { href: "/settings/ai", label: "AI 配置", description: "接口和模型", code: "06" },
+  { href: "/search", label: "搜索", description: "跨模块检索", code: "01" },
+  { href: "/notes", label: "笔记", description: "知识记录", code: "02" },
+  { href: "/projects", label: "项目", description: "任务归属", code: "03" },
+  { href: "/tasks", label: "任务", description: "行动管理", code: "04" },
+  { href: "/tags", label: "标签", description: "内容组织", code: "05" },
+  { href: "/ai", label: "AI 助手", description: "摘要与行动项", code: "06" },
+  { href: "/settings/ai", label: "AI 配置", description: "接口和模型", code: "07" },
 ];
 
 export function SidebarNav({ compact = false }: SidebarNavProps) {

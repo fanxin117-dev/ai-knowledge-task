@@ -177,7 +177,14 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
   }
 
   async function createTasks() {
-    if (items.length === 0) {
+    const nextItems = items
+      .map((item) => ({
+        title: item.title.trim(),
+        description: item.description?.trim() ? item.description.trim() : null,
+      }))
+      .filter((item) => item.title.length > 0);
+
+    if (nextItems.length === 0) {
       setNotice({ kind: "info", text: "当前没有行动项可转换，请先提取行动项。" });
       return;
     }
@@ -190,7 +197,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
         noteId,
         projectId,
         projectName,
-        items,
+        items: nextItems,
       });
       const targetProjectName = projectId ? projects.find((project) => project.id === projectId)?.name : projectName;
       setNotice({ kind: "success", text: `已同步 ${tasks.length} 个任务到项目「${targetProjectName}」。重复任务会复用已有记录。` });
@@ -211,6 +218,16 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
     }
   }
 
+  function updateActionItem(index: number, field: keyof ActionItem, value: string) {
+    setItems((current) =>
+      current.map((item, itemIndex) => (itemIndex === index ? { ...item, [field]: value } : item)),
+    );
+  }
+
+  function removeActionItem(index: number) {
+    setItems((current) => current.filter((_, itemIndex) => itemIndex !== index));
+  }
+
   const isBusy = activeOperation !== null;
   const noticeClassName =
     notice?.kind === "error"
@@ -218,6 +235,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
       : notice?.kind === "success"
         ? "border-line bg-accent text-ink"
         : "border-line bg-paper text-blueprint";
+  const canCreateTasks = items.some((item) => item.title.trim().length > 0);
 
   return (
     <section className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
@@ -252,7 +270,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
         </button>
         <button
           type="button"
-          disabled={isBusy || items.length === 0}
+          disabled={isBusy || !canCreateTasks}
           onClick={createTasks}
           className="rounded-md border-2 border-line bg-ember px-4 py-2 text-sm font-black text-ink shadow-panel disabled:opacity-60"
         >
@@ -278,11 +296,36 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
       )}
 
       {items.length > 0 ? (
-        <ul className="mt-4 space-y-2">
-          {items.map((item) => (
-            <li key={item.title} className="rounded-md border-2 border-line bg-paper p-3">
-              <p className="font-bold text-ink">{item.title}</p>
-              {item.description ? <p className="mt-1 text-sm text-muted">{item.description}</p> : null}
+        <ul className="mt-4 space-y-3">
+          {items.map((item, index) => (
+            <li key={index} className="grid gap-3 rounded-md border-2 border-line bg-paper p-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="font-[var(--font-mono)] text-xs font-bold text-copper">行动项 {index + 1}</p>
+                <button
+                  type="button"
+                  onClick={() => removeActionItem(index)}
+                  className="rounded-md border-2 border-line bg-surface px-2 py-1 text-xs font-black text-muted hover:bg-ember hover:text-ink"
+                >
+                  删除
+                </button>
+              </div>
+              <label className="grid gap-2">
+                <span className="font-[var(--font-mono)] text-xs font-bold text-muted">任务标题</span>
+                <input
+                  value={item.title}
+                  onChange={(event) => updateActionItem(index, "title", event.target.value)}
+                  className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-control"
+                />
+              </label>
+              <label className="grid gap-2">
+                <span className="font-[var(--font-mono)] text-xs font-bold text-muted">任务描述</span>
+                <textarea
+                  value={item.description ?? ""}
+                  onChange={(event) => updateActionItem(index, "description", event.target.value)}
+                  rows={2}
+                  className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold leading-6 text-ink shadow-control"
+                />
+              </label>
             </li>
           ))}
         </ul>

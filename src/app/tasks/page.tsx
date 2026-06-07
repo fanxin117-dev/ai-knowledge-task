@@ -6,7 +6,7 @@ import { SearchForm } from "@/components/ui/search-form";
 import { TaskCard } from "@/components/tasks/task-card";
 import { buildQueryPath, readSearchParam, type PageSearchParams } from "@/lib/search-params";
 import { TaskPriority, TaskStatus } from "@/generated/prisma/enums";
-import { listProjects, listTags, listTasks } from "@/lib/api/services";
+import { listProjects, listTags, listTasks, type TaskDueScope } from "@/lib/api/services";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +31,14 @@ function normalizePriority(priority: string | undefined): TaskPriority | undefin
   return undefined;
 }
 
+function normalizeDueScope(due: string | undefined, overdue: string | undefined): TaskDueScope | undefined {
+  if (due === "overdue" || due === "today" || due === "week") {
+    return due;
+  }
+
+  return overdue === "true" ? "overdue" : undefined;
+}
+
 export default async function TasksPage({ searchParams }: TasksPageProps) {
   const params = await searchParams;
   const query = readSearchParam(params, "q");
@@ -38,23 +46,23 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const projectId = readSearchParam(params, "project");
   const status = normalizeStatus(readSearchParam(params, "status"));
   const priority = normalizePriority(readSearchParam(params, "priority"));
-  const overdue = readSearchParam(params, "overdue") === "true";
+  const due = normalizeDueScope(readSearchParam(params, "due"), readSearchParam(params, "overdue"));
   const [tasks, tags, projects] = await Promise.all([
-    listTasks({ query, tagId, status, priority, overdue, projectId }),
+    listTasks({ query, tagId, status, priority, due, projectId }),
     listTags(),
     listProjects(),
   ]);
 
   const statusFilters = [
-    { label: "全部", href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, overdue: overdue ? "true" : undefined }), active: !status },
+    { label: "全部", href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due }), active: !status },
     {
       label: "未完成",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, overdue: overdue ? "true" : undefined, status: TaskStatus.OPEN }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due, status: TaskStatus.OPEN }),
       active: status === TaskStatus.OPEN,
     },
     {
       label: "已完成",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, overdue: overdue ? "true" : undefined, status: TaskStatus.DONE }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due, status: TaskStatus.DONE }),
       active: status === TaskStatus.DONE,
     },
   ];
@@ -62,12 +70,12 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const priorityFilters = [
     {
       label: "全部优先级",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, overdue: overdue ? "true" : undefined }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, due }),
       active: !priority,
     },
     ...[TaskPriority.HIGH, TaskPriority.MEDIUM, TaskPriority.LOW].map((item) => ({
       label: item === TaskPriority.HIGH ? "高" : item === TaskPriority.MEDIUM ? "中" : "低",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, overdue: overdue ? "true" : undefined, priority: item }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, due, priority: item }),
       active: priority === item,
     })),
   ];
@@ -76,24 +84,34 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
     {
       label: "全部截止日期",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, priority }),
-      active: !overdue,
+      active: !due,
     },
     {
       label: "已逾期",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, overdue: "true" }),
-      active: overdue,
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "overdue" }),
+      active: due === "overdue",
+    },
+    {
+      label: "今天",
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "today" }),
+      active: due === "today",
+    },
+    {
+      label: "未来 7 天",
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "week" }),
+      active: due === "week",
     },
   ];
 
   const projectFilters = [
     {
       label: "全部项目",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, overdue: overdue ? "true" : undefined }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, due }),
       active: !projectId,
     },
     ...projects.map((project) => ({
       label: `${project.name} (${project.openTaskCount}/${project.taskCount})`,
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, overdue: overdue ? "true" : undefined, project: project.id }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, due, project: project.id }),
       active: projectId === project.id,
     })),
   ];
@@ -101,12 +119,12 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const tagFilters = [
     {
       label: "全部标签",
-      href: buildQueryPath("/tasks", { q: query, status, priority, overdue: overdue ? "true" : undefined, project: projectId }),
+      href: buildQueryPath("/tasks", { q: query, status, priority, due, project: projectId }),
       active: !tagId,
     },
     ...tags.map((tag) => ({
       label: tag.name,
-      href: buildQueryPath("/tasks", { q: query, tag: tag.id, status, priority, overdue: overdue ? "true" : undefined, project: projectId }),
+      href: buildQueryPath("/tasks", { q: query, tag: tag.id, status, priority, due, project: projectId }),
       active: tagId === tag.id,
     })),
   ];
@@ -131,7 +149,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         action="/tasks"
         placeholder="搜索任务标题"
         defaultQuery={query}
-        hiddenFields={{ tag: tagId, status, priority, overdue: overdue ? "true" : undefined, project: projectId }}
+        hiddenFields={{ tag: tagId, status, priority, due, project: projectId }}
       />
 
       <div className="space-y-3">

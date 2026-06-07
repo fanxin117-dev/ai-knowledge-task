@@ -28,6 +28,45 @@ const taskInclude = {
 
 const DEFAULT_PROJECT_ID = "project-inbox";
 const DEFAULT_PROJECT_NAME = "收件箱";
+export type TaskDueScope = "overdue" | "today" | "week";
+
+function startOfUtcDay(date: Date) {
+  // 任务表单把日期保存为 UTC 零点；筛选也按 UTC 日边界计算，避免本地时区把“今天截止”的任务提前算成逾期。
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
+
+function addUtcDays(date: Date, days: number) {
+  const next = new Date(date);
+  next.setUTCDate(next.getUTCDate() + days);
+  return next;
+}
+
+function buildDueScopeWhere(scope: TaskDueScope | undefined) {
+  if (!scope) {
+    return {};
+  }
+
+  const todayStart = startOfUtcDay(new Date());
+
+  if (scope === "overdue") {
+    return {
+      status: TaskStatus.OPEN,
+      dueAt: {
+        lt: todayStart,
+      },
+    };
+  }
+
+  const upperBound = scope === "today" ? addUtcDays(todayStart, 1) : addUtcDays(todayStart, 7);
+
+  return {
+    status: TaskStatus.OPEN,
+    dueAt: {
+      gte: todayStart,
+      lt: upperBound,
+    },
+  };
+}
 
 function containsInsensitive(value: string) {
   return {
@@ -358,9 +397,11 @@ export async function listTasks(input: {
   status?: TaskStatus;
   priority?: TaskPriority;
   overdue?: boolean;
+  due?: TaskDueScope;
   projectId?: string;
 }) {
   const query = input.query?.trim();
+  const dueScope = input.due ?? (input.overdue ? "overdue" : undefined);
 
   const tasks = await prisma.task.findMany({
     where: {
@@ -385,14 +426,7 @@ export async function listTasks(input: {
           : {},
         input.status ? { status: input.status } : {},
         input.priority ? { priority: input.priority } : {},
-        input.overdue
-          ? {
-              status: TaskStatus.OPEN,
-              dueAt: {
-                lt: new Date(),
-              },
-            }
-          : {},
+        buildDueScopeWhere(dueScope),
         input.projectId ? { projectId: input.projectId } : {},
         input.tagId
           ? {
@@ -696,6 +730,43 @@ export async function listTags() {
   });
 
   return tags.map(serializeTag);
+}
+
+export async function searchKnowledge(input: { query?: string }) {
+  const query = input.query?.trim() ?? "";
+
+  if (!query) {
+    return {
+      query,
+      notes: [],
+      tasks: [],
+      projects: [],
+      tags: [],
+      totalCount: 0,
+    };
+  }
+
+  const [notes, tasks, projects, tags] = await Promise.all([
+    listNotes({ query }),
+    listTasks({ query }),
+    listProjects({ visibility: "all" }),
+    listTags(),
+  ]);
+
+  const lowerQuery = query.toLowerCase();
+  const matchedProjects = projects.filter((project) => {
+    return project.name.toLowerCase().includes(lowerQuery) || project.description?.toLowerCase().includes(lowerQuery);
+  });
+  const matchedTags = tags.filter((tag) => tag.name.toLowerCase().includes(lowerQuery));
+
+  return {
+    query,
+    notes,
+    tasks,
+    projects: matchedProjects,
+    tags: matchedTags,
+    totalCount: notes.length + tasks.length + matchedProjects.length + matchedTags.length,
+  };
 }
 
 export async function getTagByIdOrThrow(id: string) {
