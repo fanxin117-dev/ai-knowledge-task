@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MarkdownContent } from "@/components/ui/markdown-content";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { PageHeader } from "@/components/ui/page-header";
 import { TagPill } from "@/components/ui/tag-pill";
@@ -60,7 +61,11 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
           </span>
         </div>
 
-        <p className="mt-6 text-base leading-8 text-ink">{task.description ?? "暂无描述。"}</p>
+        {task.description ? (
+          <MarkdownContent content={task.description} />
+        ) : (
+          <p className="mt-6 text-base leading-8 text-muted">暂无描述。</p>
+        )}
 
         <div className="mt-6 flex flex-wrap gap-2">
           {task.tags.map((tag) => (

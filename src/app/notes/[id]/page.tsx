@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AiNotePanel } from "@/components/notes/ai-note-panel";
+import { MarkdownContent } from "@/components/ui/markdown-content";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { PageHeader } from "@/components/ui/page-header";
 import { TagPill } from "@/components/ui/tag-pill";
@@ -50,14 +51,7 @@ export default async function NoteDetailPage({ params }: NoteDetailPageProps) {
           </div>
         </div>
 
-        <p className="mt-6 whitespace-pre-wrap text-base leading-8 text-ink">{note.content}</p>
-
-        <section className="mt-6 rounded-lg border-2 border-line bg-surface p-4">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">AI 工作区</p>
-          <p className="mt-2 text-sm leading-6 text-muted">
-            下方 AI 面板会通过服务接口生成摘要、提取行动项，并把行动项转换为任务。
-          </p>
-        </section>
+        <MarkdownContent content={note.content} />
       </article>
 
       <AiNotePanel

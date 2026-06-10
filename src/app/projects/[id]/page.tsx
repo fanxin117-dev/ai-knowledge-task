@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MarkdownContent } from "@/components/ui/markdown-content";
 import { ProjectArchiveButton } from "@/components/projects/project-archive-button";
 import { ProjectTaskBoard } from "@/components/projects/project-task-board";
 import { DeleteButton } from "@/components/ui/delete-button";
@@ -30,8 +31,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         title={project.name}
         description={
           project.isArchived
-            ? `已归档于 ${project.archivedAt?.slice(0, 10)}。${project.description ?? "这个项目还没有描述。"}`
-            : project.description ?? "这个项目还没有描述。"
+            ? `已归档于 ${project.archivedAt?.slice(0, 10)}。项目描述和任务看板如下。`
+            : "项目描述和任务看板如下。"
         }
       />
 
@@ -64,6 +65,15 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.taskCount}</p>
         </div>
       </section>
+
+      <article className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
+        <p className="font-[var(--font-mono)] text-xs font-bold text-copper">项目描述</p>
+        {project.description ? (
+          <MarkdownContent content={project.description} />
+        ) : (
+          <p className="mt-4 text-base leading-8 text-muted">这个项目还没有描述。</p>
+        )}
+      </article>
 
       <ProjectTaskBoard openTasks={openTasks} doneTasks={doneTasks} />
     </main>

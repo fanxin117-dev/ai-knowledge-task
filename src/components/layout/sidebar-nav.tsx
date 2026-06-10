@@ -14,8 +14,7 @@ const navItems = [
   { href: "/projects", label: "项目", description: "任务归属", code: "03" },
   { href: "/tasks", label: "任务", description: "行动管理", code: "04" },
   { href: "/tags", label: "标签", description: "内容组织", code: "05" },
-  { href: "/ai", label: "AI 助手", description: "摘要与行动项", code: "06" },
-  { href: "/settings/ai", label: "AI 配置", description: "接口和模型", code: "07" },
+  { href: "/settings/ai", label: "AI 配置", description: "接口和模型", code: "06" },
 ];
 
 export function SidebarNav({ compact = false }: SidebarNavProps) {

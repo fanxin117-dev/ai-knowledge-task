@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { readStoredAiConfig } from "@/lib/ai/client-config";
 import type { AiRuntimeConfig } from "@/lib/ai/types";
 
@@ -317,15 +318,14 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
                   className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-control"
                 />
               </label>
-              <label className="grid gap-2">
-                <span className="font-[var(--font-mono)] text-xs font-bold text-muted">任务描述</span>
-                <textarea
-                  value={item.description ?? ""}
-                  onChange={(event) => updateActionItem(index, "description", event.target.value)}
-                  rows={2}
-                  className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold leading-6 text-ink shadow-control"
-                />
-              </label>
+              <MarkdownEditor
+                name={`action-description-${index}`}
+                label="任务描述"
+                value={item.description ?? ""}
+                onChange={(value) => updateActionItem(index, "description", value)}
+                rows={5}
+                minHeightClassName="min-h-[10rem]"
+              />
             </li>
           ))}
         </ul>

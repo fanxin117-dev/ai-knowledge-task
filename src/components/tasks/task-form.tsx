@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { TaskPriority, TaskStatus } from "@/generated/prisma/enums";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { TagPill } from "@/components/ui/tag-pill";
 
 type TagOption = {
@@ -49,6 +50,7 @@ type ApiError = {
 
 export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormProps) {
   const router = useRouter();
+  const [description, setDescription] = useState(initialTask?.description ?? "");
   const [selectedTagIds, setSelectedTagIds] = useState(
     () => new Set(initialTask?.tags.map((tag) => tag.id) ?? []),
   );
@@ -59,6 +61,11 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
   function clearErrors() {
     setError(null);
     setFieldErrors({});
+  }
+
+  function handleDescriptionChange(nextDescription: string) {
+    setDescription(nextDescription);
+    clearErrors();
   }
 
   useEffect(() => {
@@ -85,7 +92,7 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
 
     const formData = new FormData(event.currentTarget);
     const title = String(formData.get("title") ?? "").trim();
-    const description = String(formData.get("description") ?? "");
+    const trimmedDescription = description.trim();
     const dueAt = String(formData.get("dueAt") ?? "");
     const projectId = String(formData.get("projectId") ?? "");
     const sourceNoteId = String(formData.get("sourceNoteId") ?? "");
@@ -116,7 +123,7 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
       },
       body: JSON.stringify({
         title,
-        description,
+        description: trimmedDescription,
         status: String(formData.get("status") ?? TaskStatus.OPEN),
         priority: String(formData.get("priority") ?? TaskPriority.MEDIUM),
         dueAt,
@@ -158,15 +165,14 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
       </label>
 
-      <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">描述</span>
-        <textarea
-          name="description"
-          rows={5}
-          defaultValue={initialTask?.description ?? ""}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
-        />
-      </label>
+      <MarkdownEditor
+        name="description"
+        label="描述"
+        value={description}
+        onChange={handleDescriptionChange}
+        rows={10}
+        minHeightClassName="min-h-[16rem]"
+      />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <label className="grid min-w-0 gap-2">

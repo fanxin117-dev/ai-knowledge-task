@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 
 type ProjectFormProps = {
   mode: "create" | "edit";
@@ -22,6 +23,7 @@ type ApiError = {
 
 export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
   const router = useRouter();
+  const [description, setDescription] = useState(initialProject?.description ?? "");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,6 +31,11 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
   function clearErrors() {
     setError(null);
     setFieldErrors({});
+  }
+
+  function handleDescriptionChange(nextDescription: string) {
+    setDescription(nextDescription);
+    clearErrors();
   }
 
   useEffect(() => {
@@ -42,7 +49,7 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
 
     const formData = new FormData(event.currentTarget);
     const name = String(formData.get("name") ?? "").trim();
-    const description = String(formData.get("description") ?? "");
+    const trimmedDescription = description.trim();
     const nextFieldErrors: Record<string, string> = {};
 
     if (!name) {
@@ -68,7 +75,7 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
       },
       body: JSON.stringify({
         name,
-        description,
+        description: trimmedDescription,
       }),
     });
     const payload = (await response.json().catch(() => null)) as
@@ -103,15 +110,14 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
         {fieldErrors.name ? <span className="text-sm font-bold text-ember">{fieldErrors.name}</span> : null}
       </label>
 
-      <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">描述</span>
-        <textarea
-          name="description"
-          rows={5}
-          defaultValue={initialProject?.description ?? ""}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
-        />
-      </label>
+      <MarkdownEditor
+        name="description"
+        label="描述"
+        value={description}
+        onChange={handleDescriptionChange}
+        rows={10}
+        minHeightClassName="min-h-[16rem]"
+      />
 
       {error ? <p className="text-sm font-bold text-ember">{error}</p> : null}
 

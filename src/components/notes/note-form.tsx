@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { TagPill } from "@/components/ui/tag-pill";
 
 type TagOption = {
@@ -31,6 +32,7 @@ type ApiError = {
 
 export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
   const router = useRouter();
+  const [content, setContent] = useState(initialNote?.content ?? "");
   const [selectedTagIds, setSelectedTagIds] = useState(
     () => new Set(initialNote?.tags.map((tag) => tag.id) ?? []),
   );
@@ -62,20 +64,25 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
     });
   }
 
+  function handleContentChange(nextContent: string) {
+    setContent(nextContent);
+    clearErrors();
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     clearErrors();
 
     const formData = new FormData(event.currentTarget);
     const title = String(formData.get("title") ?? "").trim();
-    const content = String(formData.get("content") ?? "").trim();
+    const trimmedContent = content.trim();
     const nextFieldErrors: Record<string, string> = {};
 
     if (!title) {
       nextFieldErrors.title = "标题不能为空。";
     }
 
-    if (!content) {
+    if (!trimmedContent) {
       nextFieldErrors.content = "正文不能为空。";
     }
 
@@ -96,7 +103,7 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
       },
       body: JSON.stringify({
         title,
-        content,
+        content: trimmedContent,
         tagIds: [...selectedTagIds],
       }),
     });
@@ -121,7 +128,7 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
     <form
       onSubmit={handleSubmit}
       onChange={clearErrors}
-      className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
+      className="space-y-5 rounded-lg border-2 border-line bg-paper p-4 shadow-panel md:p-6"
     >
       <label className="grid gap-2">
         <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标题</span>
@@ -134,19 +141,15 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
         {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
       </label>
 
-      <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">正文</span>
-        <textarea
-          name="content"
-          rows={8}
-          defaultValue={initialNote?.content}
-          aria-invalid={Boolean(fieldErrors.content)}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base leading-6 text-ink shadow-panel md:text-sm"
-        />
-        {fieldErrors.content ? (
-          <span className="text-sm font-bold text-ember">{fieldErrors.content}</span>
-        ) : null}
-      </label>
+      <MarkdownEditor
+        name="content"
+        label="正文"
+        value={content}
+        onChange={handleContentChange}
+        error={fieldErrors.content}
+        rows={16}
+        minHeightClassName="min-h-[26rem]"
+      />
 
       <fieldset className="space-y-3">
         <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">标签</legend>

@@ -106,7 +106,7 @@ export default async function DashboardPage() {
     latestNote
       ? { href: `/notes/${latestNote.id}`, label: "打开最近笔记", helper: latestNote.title }
       : { href: "/notes/new", label: "创建第一条笔记", helper: "记录一个想法、资料或会议结论" },
-    { href: "/ai", label: "使用 AI 助手", helper: "从笔记生成摘要和行动项" },
+    { href: "/settings/ai", label: "调整 AI 配置", helper: "配置摘要和行动项生成所用服务" },
   ];
 
   const dashboardStats = [
