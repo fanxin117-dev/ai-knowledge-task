@@ -16,7 +16,7 @@ export function FilterRail({ label, items }: FilterRailProps) {
   const activeLabel = activeItems.length > 0 ? activeItems.map((item) => item.label).join("、") : "全部";
   const linkClassName = (active?: boolean) =>
     [
-      "inline-flex min-h-10 items-center rounded-md border px-3 py-2 text-sm font-medium",
+      "inline-flex min-h-10 shrink-0 items-center rounded-md border px-3 py-2 text-sm font-medium",
       active ? "border-blue-600 bg-blue-50 text-blue-700" : "border-slate-200 bg-white text-slate-500 hover:bg-slate-50 hover:text-slate-950",
     ].join(" ");
 
@@ -27,7 +27,7 @@ export function FilterRail({ label, items }: FilterRailProps) {
           <span className="text-xs text-slate-500">{label}</span>
           <span className="text-sm">{activeLabel}</span>
         </summary>
-        <nav className="mt-3 flex flex-wrap gap-2" aria-label={`${label} 移动筛选`}>
+        <nav className="mt-3 flex gap-2 overflow-x-auto pb-1" aria-label={`${label} 移动筛选`}>
           {items.map((item) => (
             <Link
               key={item.href + item.label}
@@ -41,11 +41,11 @@ export function FilterRail({ label, items }: FilterRailProps) {
         </nav>
       </details>
 
-      <nav className="hidden grid-cols-[5rem_minmax(0,1fr)] items-start gap-3 md:grid" aria-label={label}>
-        <span className="pt-2.5 text-xs font-medium text-slate-500">
+      <nav className="hidden grid-cols-[4.25rem_minmax(0,1fr)] items-center gap-3 md:grid" aria-label={label}>
+        <span className="text-xs font-medium text-slate-500">
           {label}
         </span>
-        <div className="flex min-w-0 flex-wrap gap-2">
+        <div className="flex min-w-0 gap-2 overflow-x-auto pb-1">
           {items.map((item) => (
             <Link
               key={item.href + item.label}

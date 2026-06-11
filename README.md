@@ -158,6 +158,14 @@ npm.cmd run dev
 
 ## 测试
 
+提交前建议先运行综合质量检查：
+
+```bash
+npm run quality
+```
+
+`quality` 会依次执行 ESLint、TypeScript 类型检查和 Vitest 单元测试。ESLint（JavaScript/TypeScript 静态检查工具）用于发现代码风格和潜在错误；TypeScript 类型检查用于在不启动应用的情况下验证类型是否一致；Vitest 是本项目的单元测试框架。
+
 运行核心 API 测试：
 
 ```bash
@@ -219,6 +227,17 @@ src/
   lib/
     ai/
     api/
+      service/
+        notes.ts
+        tasks.ts
+        projects.ts
+        tags.ts
+        search.ts
+        shared.ts
+      services.ts
+      validation.ts
+      error.ts
+      request.ts
     prisma.ts
     search-params.ts
 scripts/
@@ -236,6 +255,7 @@ tests/
 
 如果你是初学者，建议从这里开始系统学习本项目：
 
+- [项目架构说明](./docs/architecture.md)
 - [学习文档索引](./docs/learning/README.md)
 - [项目总览与学习路线](./docs/learning/01-project-overview.md)
 - [环境、命令与项目启动](./docs/learning/02-environment-and-commands.md)

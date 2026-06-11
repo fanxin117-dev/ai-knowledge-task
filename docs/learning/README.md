@@ -4,6 +4,7 @@
 
 ## 推荐学习顺序
 
+0. [项目架构说明](../architecture.md)
 1. [项目总览与学习路线](./01-project-overview.md)
 2. [环境、命令与项目启动](./02-environment-and-commands.md)
 3. [TypeScript、React 与 Next.js 前端](./03-frontend-next-react-typescript.md)

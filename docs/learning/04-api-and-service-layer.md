@@ -139,9 +139,25 @@ def parse_task_input(body: dict) -> TaskInput:
 
 ## 6. 服务层为什么存在
 
-位置：[src/lib/api/services.ts](../../src/lib/api/services.ts)
+兼容入口位置：[src/lib/api/services.ts](../../src/lib/api/services.ts)
+
+实际实现位置：[src/lib/api/service/](../../src/lib/api/service/)
 
 服务层负责业务规则，不直接属于页面，也不直接属于 API。
+
+当前服务层按领域拆分：
+
+```text
+src/lib/api/service/
+  notes.ts       笔记 CRUD、AI 摘要保存、行动项保存
+  tasks.ts       任务 CRUD、状态切换、截止日期筛选、行动项转任务
+  projects.ts    项目 CRUD、归档、默认项目保护
+  tags.ts        标签 CRUD、使用中标签删除保护
+  search.ts      跨领域搜索
+  shared.ts      序列化、通用校验、默认项目和共享 include 配置
+```
+
+`services.ts` 只做门面导出，让旧代码仍然可以从 `@/lib/api/services` 导入。门面导出（facade export）就是保留统一入口，把真正实现放到更小、更清晰的模块里。
 
 例如：
 
@@ -172,6 +188,8 @@ async function ensureProjectExists(projectId: string | null) {
 - 项目已归档时禁止新增任务。
 
 如果把这些逻辑散落在每个 API 文件里，后续会很难维护。
+
+如果把所有业务都堆在一个服务文件里，文件会越来越大，也会让笔记、任务、项目和标签之间的修改互相干扰。因此新增功能时优先放入对应领域文件，只有跨多个领域复用的稳定逻辑才放入 `shared.ts`。
 
 ## 7. 序列化是什么
 

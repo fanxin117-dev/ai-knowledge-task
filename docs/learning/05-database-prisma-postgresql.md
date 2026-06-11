@@ -150,7 +150,7 @@ npm.cmd run db:generate
 
 ## 7. 查询示例
 
-位置：[src/lib/api/services.ts](../../src/lib/api/services.ts)
+位置：[src/lib/api/service/tasks.ts](../../src/lib/api/service/tasks.ts)
 
 ```ts
 const tasks = await prisma.task.findMany({
@@ -158,10 +158,10 @@ const tasks = await prisma.task.findMany({
     AND: [
       input.status ? { status: input.status } : {},
       input.priority ? { priority: input.priority } : {},
-      input.overdue
+      dueScope === "overdue"
         ? {
             status: TaskStatus.OPEN,
-            dueAt: { lt: new Date() },
+            dueAt: { lt: todayStart },
           }
         : {},
     ],

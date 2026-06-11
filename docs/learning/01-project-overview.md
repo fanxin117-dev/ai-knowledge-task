@@ -45,9 +45,10 @@ tests/
 2. 表单组件：`src/components/tasks/task-form.tsx`
 3. API：`src/app/api/tasks/route.ts`
 4. 输入校验：`src/lib/api/validation.ts`
-5. 服务层：`src/lib/api/services.ts`
-6. 数据库：`prisma/schema.prisma` 中的 `Task`
-7. 页面跳转：任务创建成功后进入 `/tasks/[id]`
+5. 服务层入口：`src/lib/api/services.ts`
+6. 任务领域实现：`src/lib/api/service/tasks.ts`
+7. 数据库：`prisma/schema.prisma` 中的 `Task`
+8. 页面跳转：任务创建成功后进入 `/tasks/[id]`
 
 Python 类比：
 

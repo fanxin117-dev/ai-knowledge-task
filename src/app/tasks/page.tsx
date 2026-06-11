@@ -70,7 +70,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
 
   const priorityFilters = [
     {
-      label: "全部优先级",
+      label: "全部",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: effectiveProjectId, due }),
       active: !priority,
     },
@@ -83,7 +83,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
 
   const dueFilters = [
     {
-      label: "全部截止日期",
+      label: "全部",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: effectiveProjectId, priority }),
       active: !due,
     },
@@ -106,7 +106,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
 
   const projectFilters = [
     {
-      label: "全部项目",
+      label: "全部",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, due }),
       active: !effectiveProjectId,
     },
@@ -119,7 +119,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
 
   const tagFilters = [
     {
-      label: "全部标签",
+      label: "全部",
       href: buildQueryPath("/tasks", { q: query, status, priority, due, project: effectiveProjectId }),
       active: !tagId,
     },
@@ -146,7 +146,7 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         }
       />
 
-      <section className="grid gap-5 xl:grid-cols-[20rem_minmax(0,1fr)]">
+      <section className="grid gap-5 xl:grid-cols-[28rem_minmax(0,1fr)]">
         <aside className="space-y-3 xl:sticky xl:top-8 xl:self-start">
           <SearchForm
             action="/tasks"

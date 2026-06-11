@@ -8,13 +8,13 @@ type SidebarNavProps = {
 };
 
 const navItems = [
-  { href: "/", label: "工作台", code: "00" },
-  { href: "/search", label: "搜索", code: "01" },
-  { href: "/notes", label: "笔记", code: "02" },
-  { href: "/projects", label: "项目", code: "03" },
-  { href: "/tasks", label: "任务", code: "04" },
-  { href: "/tags", label: "标签", code: "05" },
-  { href: "/settings/ai", label: "AI 配置", code: "06" },
+  { href: "/", label: "工作台" },
+  { href: "/search", label: "搜索" },
+  { href: "/notes", label: "笔记" },
+  { href: "/projects", label: "项目" },
+  { href: "/tasks", label: "任务" },
+  { href: "/tags", label: "标签" },
+  { href: "/settings/ai", label: "AI 配置" },
 ];
 
 export function SidebarNav({ compact = false }: SidebarNavProps) {
@@ -35,7 +35,7 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
           aria-label="主导航"
           className="flex max-w-full snap-x gap-2 overflow-x-auto overscroll-x-contain pr-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
-        {navItems.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -47,7 +47,7 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
             >
               {item.label}
             </Link>
-        ))}
+          ))}
         </nav>
         <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-slate-50 to-transparent" aria-hidden />
       </div>
@@ -67,14 +67,11 @@ export function SidebarNav({ compact = false }: SidebarNavProps) {
             href={item.href}
             aria-current={isActive(item.href) ? "page" : undefined}
             className={[
-              "group grid min-h-12 grid-cols-[2rem_1fr] gap-3 rounded-md px-3 py-2.5",
+              "group flex min-h-12 items-center rounded-md px-3 py-2.5",
               isActive(item.href) ? "bg-slate-100 text-blue-700" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950",
             ].join(" ")}
           >
-            <span className="font-[var(--font-mono)] text-xs font-semibold text-slate-400">{item.code}</span>
-            <span>
-              <span className="block text-sm font-semibold">{item.label}</span>
-            </span>
+            <span className="block text-sm font-semibold">{item.label}</span>
           </Link>
         ))}
       </div>
