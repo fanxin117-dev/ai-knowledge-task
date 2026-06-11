@@ -29,7 +29,7 @@ export function NoteCard({ note }: NoteCardProps) {
         </div>
         <Link
           href={`/notes/${note.id}`}
-          className="inline-flex min-h-10 items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
+          className="inline-flex min-h-11 items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
         >
           查看
         </Link>

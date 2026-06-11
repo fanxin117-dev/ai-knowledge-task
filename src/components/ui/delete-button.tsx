@@ -47,7 +47,7 @@ export function DeleteButton({ endpoint, redirectTo, label }: DeleteButtonProps)
         type="button"
         onClick={handleDelete}
         disabled={isDeleting}
-        className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
+        className="min-h-11 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
       >
         {isDeleting ? "删除中..." : "删除"}
       </button>

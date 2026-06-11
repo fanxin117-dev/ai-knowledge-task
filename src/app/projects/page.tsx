@@ -32,7 +32,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         actions={
           <Link
             href="/projects/new"
-            className="inline-flex min-h-10 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
+            className="inline-flex min-h-11 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
           >
             新建项目
           </Link>
@@ -48,7 +48,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                 href={item.href}
                 aria-current={item.active ? "page" : undefined}
                 className={[
-                  "inline-flex min-h-10 items-center rounded-md px-3 py-2 text-sm font-medium",
+                  "inline-flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium",
                   item.active ? "bg-blue-50 text-blue-700" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950",
                 ].join(" ")}
               >

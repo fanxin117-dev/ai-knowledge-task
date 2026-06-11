@@ -72,7 +72,7 @@ export function TaskCard({ task }: TaskCardProps) {
 
         <Link
           href={`/tasks/${task.id}`}
-          className="inline-flex min-h-10 items-center rounded-md px-2 text-sm font-semibold text-blue-700 hover:text-slate-950"
+          className="inline-flex min-h-11 items-center rounded-md px-2 text-sm font-semibold text-blue-700 hover:text-slate-950"
         >
           查看详情
         </Link>

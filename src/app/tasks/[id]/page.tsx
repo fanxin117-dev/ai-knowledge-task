@@ -31,7 +31,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/tasks/${task.id}/edit`}
-          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
+          className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑任务
         </Link>
@@ -86,7 +86,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
         ) : null}
       </article>
 
-      <Link href="/tasks" className="inline-flex text-sm font-bold text-blue-700 hover:text-slate-950">
+      <Link href="/tasks" className="inline-flex min-h-11 items-center text-sm font-bold text-blue-700 hover:text-slate-950">
         返回任务列表
       </Link>
     </main>

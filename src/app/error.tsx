@@ -24,7 +24,7 @@ export default function AppErrorPage({ error, reset }: AppErrorPageProps) {
         <button
           type="button"
           onClick={reset}
-          className="mt-6 rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
+          className="mt-6 min-h-11 rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           重试当前页面
         </button>

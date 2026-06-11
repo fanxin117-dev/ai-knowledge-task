@@ -44,7 +44,7 @@ export function ProjectArchiveButton({ projectId, isArchived }: ProjectArchiveBu
         type="button"
         onClick={handleClick}
         disabled={isSubmitting}
-        className="rounded-md bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
+        className="min-h-11 rounded-md bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
       >
         {isSubmitting ? "处理中..." : isArchived ? "恢复项目" : "归档项目"}
       </button>

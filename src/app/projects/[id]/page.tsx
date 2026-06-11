@@ -39,13 +39,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/projects/${project.id}/edit`}
-          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
+          className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑项目
         </Link>
         <Link
           href={`/tasks?project=${project.id}`}
-          className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm"
+          className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm"
         >
           查看任务筛选
         </Link>

@@ -246,7 +246,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           <span className="rounded-md border border-slate-200 bg-blue-50 px-2 py-1 font-[var(--font-mono)] text-xs font-black text-slate-950">
             {aiConfig.mode === "mock" ? "本地模拟" : aiConfig.label || "自定义"}
           </span>
-          <Link href="/settings/ai" className="text-sm font-bold text-blue-700 hover:text-slate-950">
+          <Link href="/settings/ai" className="inline-flex min-h-11 items-center text-sm font-bold text-blue-700 hover:text-slate-950">
             配置
           </Link>
         </div>
@@ -257,7 +257,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy}
           onClick={summarize}
-          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
+          className="min-h-11 rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
         >
           {activeOperation === "summary" ? "生成中..." : "生成摘要"}
         </button>
@@ -265,7 +265,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy}
           onClick={extractActions}
-          className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
+          className="min-h-11 rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
         >
           {activeOperation === "actions" ? "提取中..." : "提取行动项"}
         </button>
@@ -273,7 +273,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy || !canCreateTasks}
           onClick={createTasks}
-          className="rounded-md border border-slate-200 bg-red-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
+          className="min-h-11 rounded-md border border-slate-200 bg-red-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
         >
           {activeOperation === "tasks" ? "同步中..." : "行动项转任务"}
         </button>
@@ -305,7 +305,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
                 <button
                   type="button"
                   onClick={() => removeActionItem(index)}
-                  className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs font-black text-slate-500 hover:bg-red-50 hover:text-slate-950"
+                  className="min-h-11 min-w-11 rounded-md border border-slate-200 bg-white px-2 py-1 text-xs font-black text-slate-500 hover:bg-red-50 hover:text-slate-950"
                 >
                   删除
                 </button>
@@ -315,7 +315,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
                 <input
                   value={item.title}
                   onChange={(event) => updateActionItem(index, "title", event.target.value)}
-                  className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
+                  className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
                 />
               </label>
               <MarkdownEditor
@@ -337,7 +337,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           <select
             value={projectId}
             onChange={(event) => setProjectId(event.target.value)}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
           >
             <option value="">按下方名称创建或复用项目</option>
             {projects.map((project) => (
@@ -353,7 +353,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
             value={projectName}
             disabled={Boolean(projectId)}
             onChange={(event) => setProjectName(event.target.value)}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm disabled:opacity-50"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm disabled:opacity-50"
           />
         </label>
       </div>

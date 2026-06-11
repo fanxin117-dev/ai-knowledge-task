@@ -16,7 +16,7 @@ export function EmptyState({ title, actionLabel, actionHref }: EmptyStateProps) 
         {actionLabel && actionHref ? (
           <Link
             href={actionHref}
-            className="mt-6 inline-flex rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
+            className="mt-6 inline-flex min-h-11 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
           >
             {actionLabel}
           </Link>

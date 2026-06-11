@@ -18,7 +18,7 @@ export default async function TagsPage() {
 
       <Link
         href="/tags/new"
-        className="inline-flex min-h-10 w-fit items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
+        className="inline-flex min-h-11 w-fit items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
       >
         新建标签
       </Link>

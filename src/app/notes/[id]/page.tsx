@@ -32,7 +32,7 @@ export default async function NoteDetailPage({ params }: NoteDetailPageProps) {
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/notes/${note.id}/edit`}
-          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
+          className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑笔记
         </Link>
@@ -61,7 +61,7 @@ export default async function NoteDetailPage({ params }: NoteDetailPageProps) {
         projects={projects.map((project) => ({ id: project.id, name: project.name }))}
       />
 
-      <Link href="/notes" className="inline-flex text-sm font-bold text-blue-700 hover:text-slate-950">
+      <Link href="/notes" className="inline-flex min-h-11 items-center text-sm font-bold text-blue-700 hover:text-slate-950">
         返回笔记列表
       </Link>
     </main>
