@@ -6,26 +6,22 @@ type AppShellProps = {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="min-h-dvh">
-      {/* 移动端保留紧凑品牌栏，确保小屏打开时先看到产品身份和当前实验阶段。 */}
-      <header className="border-b-2 border-line bg-ink px-4 py-3 text-surface lg:hidden">
-        <p className="font-[var(--font-mono)] text-xs">AI 知识任务工作台 / 第一期</p>
+    <div className="min-h-dvh bg-slate-50">
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+        <p className="text-sm font-semibold text-slate-950">AI 知识任务工作台</p>
       </header>
 
-      <div className="mx-auto flex w-full max-w-7xl gap-0 px-3 py-4 sm:px-4 lg:gap-6 lg:px-6 lg:py-6">
-        <aside className="hidden w-64 shrink-0 lg:block">
+      <div className="grid min-h-dvh w-full lg:grid-cols-[17rem_minmax(0,1fr)]">
+        <aside className="sticky top-0 hidden h-dvh border-r border-slate-200 bg-white lg:block">
           <SidebarNav />
         </aside>
 
-        <div className="min-w-0 flex-1">
-          {/* 移动端把导航放在内容上方，减少第一阶段的交互复杂度。 */}
-          <div className="mb-4 lg:hidden">
+        <div className="min-w-0">
+          <div className="sticky top-[2.875rem] z-20 border-b border-slate-200 bg-slate-50/95 px-3 py-3 backdrop-blur sm:px-4 lg:hidden">
             <SidebarNav compact />
           </div>
 
-          <div className="relative max-w-full rounded-lg border-2 border-line bg-surface p-4 shadow-panel md:p-6 lg:p-8">
-            {/* 右上角状态条是全局视觉锚点，强调这是一个仍处在实验阶段的工作台。 */}
-            <div className="pointer-events-none absolute right-0 top-0 h-2 w-40 bg-accent" />
+          <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 lg:px-10 lg:py-12 2xl:px-14">
             {children}
           </div>
         </div>

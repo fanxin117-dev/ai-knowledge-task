@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+﻿import type { ReactNode } from "react";
 
 type MarkdownBlock =
   | { type: "heading"; level: 1 | 2 | 3; text: string }
@@ -117,13 +117,13 @@ function renderInline(text: string): ReactNode[] {
     const token = match[0];
     if (token.startsWith("**")) {
       parts.push(
-        <strong key={`${match.index}-strong`} className="font-black text-ink">
+        <strong key={`${match.index}-strong`} className="font-black text-slate-950">
           {token.slice(2, -2)}
         </strong>,
       );
     } else if (token.startsWith("`")) {
       parts.push(
-        <code key={`${match.index}-code`} className="rounded border border-line bg-paper px-1 py-0.5 font-[var(--font-mono)] text-sm">
+        <code key={`${match.index}-code`} className="rounded border border-slate-200 bg-slate-50 px-1 py-0.5 font-[var(--font-mono)] text-sm">
           {token.slice(1, -1)}
         </code>,
       );
@@ -136,7 +136,7 @@ function renderInline(text: string): ReactNode[] {
         <a
           key={`${match.index}-link`}
           href={isSafeHref ? href : "#"}
-          className="font-bold text-blueprint underline decoration-2 underline-offset-4 hover:text-ink"
+          className="font-bold text-blue-700 underline decoration-2 underline-offset-4 hover:text-slate-950"
           rel="noreferrer"
           target={href.startsWith("http") ? "_blank" : undefined}
         >
@@ -168,7 +168,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
   const blocks = parseMarkdown(content);
 
   return (
-    <div className="mt-6 space-y-5 text-base leading-8 text-ink">
+    <div className="mt-6 space-y-5 text-base leading-8 text-slate-950">
       {blocks.map((block, index) => {
         if (block.type === "heading") {
           const Tag = block.level === 1 ? "h2" : block.level === 2 ? "h3" : "h4";
@@ -188,7 +188,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
         if (block.type === "blockquote") {
           return (
-            <blockquote key={`${block.type}-${index}`} className="border-l-4 border-copper bg-surface px-4 py-3 text-muted">
+            <blockquote key={`${block.type}-${index}`} className="border-l-4 border-slate-300 bg-white px-4 py-3 text-slate-500">
               {renderTextWithBreaks(block.text)}
             </blockquote>
           );
@@ -216,14 +216,14 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
 
         if (block.type === "code") {
           return (
-            <pre key={`${block.type}-${index}`} className="overflow-x-auto rounded-md border-2 border-line bg-ink p-4 text-surface">
+            <pre key={`${block.type}-${index}`} className="overflow-x-auto rounded-md border border-slate-200 bg-slate-950 p-4 text-white">
               <code className="font-[var(--font-mono)] text-sm leading-6">{block.text}</code>
             </pre>
           );
         }
 
         if (block.type === "divider") {
-          return <hr key={`${block.type}-${index}`} className="border-line" />;
+          return <hr key={`${block.type}-${index}`} className="border-slate-200" />;
         }
 
         return <p key={`${block.type}-${index}`}>{renderTextWithBreaks(block.text)}</p>;

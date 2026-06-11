@@ -15,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body>
-        {/* AppShell 负责全局导航和页面容器，让每个页面只关注自己的业务内容。 */}
-        <div className="paper-grain">
-          <AppShell>{children}</AppShell>
-        </div>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

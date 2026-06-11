@@ -1,6 +1,5 @@
-import { EmptyState } from "@/components/ui/empty-state";
+﻿import { EmptyState } from "@/components/ui/empty-state";
 import { FilterRail } from "@/components/ui/filter-rail";
-import { ModulePanel } from "@/components/ui/module-panel";
 import { NoteCard } from "@/components/notes/note-card";
 import { PageHeader } from "@/components/ui/page-header";
 import { SearchForm } from "@/components/ui/search-form";
@@ -38,42 +37,41 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
         actions={
           <Link
             href="/notes/new"
-            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+            className="inline-flex min-h-10 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
           >
             新建笔记
           </Link>
         }
       />
 
-      <SearchForm
-        action="/notes"
-        placeholder="搜索标题或正文"
-        defaultQuery={query}
-        hiddenFields={{ tag: tagId }}
-      />
+      <section className="grid gap-5 xl:grid-cols-[18rem_minmax(0,1fr)]">
+        <aside className="space-y-3 xl:sticky xl:top-8 xl:self-start">
+          <SearchForm
+            action="/notes"
+            placeholder="搜索标题或正文"
+            defaultQuery={query}
+            hiddenFields={{ tag: tagId }}
+          />
+          <div className="rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+            <FilterRail label="标签" items={tagFilters} />
+          </div>
+        </aside>
 
-      <FilterRail label="标签" items={tagFilters} />
-
-      <ModulePanel
-        code="笔记说明"
-        title="笔记页当前能力"
-        items={["列表和详情已分离，避免单页承载过多状态。", "搜索由服务层转换成数据库查询，后续 API 可复用同一逻辑。", "AI 摘要入口只出现在笔记详情页，减少误触。"]}
-      />
-
-      {notes.length > 0 ? (
-        <section className="grid gap-4 lg:grid-cols-2" aria-label="笔记列表">
-          {notes.map((note) => (
-            <NoteCard key={note.id} note={note} />
-          ))}
-        </section>
-      ) : (
-        <EmptyState
-          title="没有匹配的笔记"
-          description="换一个关键词或清除标签筛选后再试。"
-          actionLabel="清除筛选"
-          actionHref="/notes"
-        />
-      )}
+        {notes.length > 0 ? (
+          <section className="grid min-w-0 gap-3 lg:grid-cols-2 2xl:grid-cols-3" aria-label="笔记列表">
+            {notes.map((note) => (
+              <NoteCard key={note.id} note={note} />
+            ))}
+          </section>
+        ) : (
+          <EmptyState
+            title="没有匹配的笔记"
+            description="换一个关键词或清除标签筛选后再试。"
+            actionLabel="清除筛选"
+            actionHref="/notes"
+          />
+        )}
+      </section>
     </main>
   );
 }

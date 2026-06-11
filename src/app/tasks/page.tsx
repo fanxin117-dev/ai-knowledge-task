@@ -1,6 +1,5 @@
-import { EmptyState } from "@/components/ui/empty-state";
+﻿import { EmptyState } from "@/components/ui/empty-state";
 import { FilterRail } from "@/components/ui/filter-rail";
-import { ModulePanel } from "@/components/ui/module-panel";
 import { PageHeader } from "@/components/ui/page-header";
 import { SearchForm } from "@/components/ui/search-form";
 import { TaskCard } from "@/components/tasks/task-card";
@@ -47,22 +46,24 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const status = normalizeStatus(readSearchParam(params, "status"));
   const priority = normalizePriority(readSearchParam(params, "priority"));
   const due = normalizeDueScope(readSearchParam(params, "due"), readSearchParam(params, "overdue"));
-  const [tasks, tags, projects] = await Promise.all([
-    listTasks({ query, tagId, status, priority, due, projectId }),
+  const [tags, projects] = await Promise.all([
     listTags(),
     listProjects(),
   ]);
+  const projectFilterOptions = projects.filter((project) => project.taskCount > 0);
+  const effectiveProjectId = projectFilterOptions.some((project) => project.id === projectId) ? projectId : undefined;
+  const tasks = await listTasks({ query, tagId, status, priority, due, projectId: effectiveProjectId });
 
   const statusFilters = [
-    { label: "全部", href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due }), active: !status },
+    { label: "全部", href: buildQueryPath("/tasks", { q: query, tag: tagId, project: effectiveProjectId, priority, due }), active: !status },
     {
       label: "未完成",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due, status: TaskStatus.OPEN }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: effectiveProjectId, priority, due, status: TaskStatus.OPEN }),
       active: status === TaskStatus.OPEN,
     },
     {
       label: "已完成",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: projectId, priority, due, status: TaskStatus.DONE }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, project: effectiveProjectId, priority, due, status: TaskStatus.DONE }),
       active: status === TaskStatus.DONE,
     },
   ];
@@ -70,12 +71,12 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const priorityFilters = [
     {
       label: "全部优先级",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, due }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: effectiveProjectId, due }),
       active: !priority,
     },
     ...[TaskPriority.HIGH, TaskPriority.MEDIUM, TaskPriority.LOW].map((item) => ({
       label: item === TaskPriority.HIGH ? "高" : item === TaskPriority.MEDIUM ? "中" : "低",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, due, priority: item }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: effectiveProjectId, due, priority: item }),
       active: priority === item,
     })),
   ];
@@ -83,22 +84,22 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
   const dueFilters = [
     {
       label: "全部截止日期",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: projectId, priority }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status, project: effectiveProjectId, priority }),
       active: !due,
     },
     {
       label: "已逾期",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "overdue" }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: effectiveProjectId, priority, due: "overdue" }),
       active: due === "overdue",
     },
     {
       label: "今天",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "today" }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: effectiveProjectId, priority, due: "today" }),
       active: due === "today",
     },
     {
       label: "未来 7 天",
-      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: projectId, priority, due: "week" }),
+      href: buildQueryPath("/tasks", { q: query, tag: tagId, status: TaskStatus.OPEN, project: effectiveProjectId, priority, due: "week" }),
       active: due === "week",
     },
   ];
@@ -107,24 +108,24 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
     {
       label: "全部项目",
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, due }),
-      active: !projectId,
+      active: !effectiveProjectId,
     },
-    ...projects.map((project) => ({
+    ...projectFilterOptions.map((project) => ({
       label: `${project.name} (${project.openTaskCount}/${project.taskCount})`,
       href: buildQueryPath("/tasks", { q: query, tag: tagId, status, priority, due, project: project.id }),
-      active: projectId === project.id,
+      active: effectiveProjectId === project.id,
     })),
   ];
 
   const tagFilters = [
     {
       label: "全部标签",
-      href: buildQueryPath("/tasks", { q: query, status, priority, due, project: projectId }),
+      href: buildQueryPath("/tasks", { q: query, status, priority, due, project: effectiveProjectId }),
       active: !tagId,
     },
     ...tags.map((tag) => ({
       label: tag.name,
-      href: buildQueryPath("/tasks", { q: query, tag: tag.id, status, priority, due, project: projectId }),
+      href: buildQueryPath("/tasks", { q: query, tag: tag.id, status, priority, due, project: effectiveProjectId }),
       active: tagId === tag.id,
     })),
   ];
@@ -138,48 +139,45 @@ export default async function TasksPage({ searchParams }: TasksPageProps) {
         actions={
           <Link
             href="/tasks/new"
-            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+            className="inline-flex min-h-10 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
           >
             新建任务
           </Link>
         }
       />
 
-      <SearchForm
-        action="/tasks"
-        placeholder="搜索任务标题"
-        defaultQuery={query}
-        hiddenFields={{ tag: tagId, status, priority, due, project: projectId }}
-      />
+      <section className="grid gap-5 xl:grid-cols-[20rem_minmax(0,1fr)]">
+        <aside className="space-y-3 xl:sticky xl:top-8 xl:self-start">
+          <SearchForm
+            action="/tasks"
+            placeholder="搜索任务标题"
+            defaultQuery={query}
+            hiddenFields={{ tag: tagId, status, priority, due, project: effectiveProjectId }}
+          />
+          <div className="space-y-3 rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+            <FilterRail label="项目" items={projectFilters} />
+            <FilterRail label="状态" items={statusFilters} />
+            <FilterRail label="优先级" items={priorityFilters} />
+            <FilterRail label="截止日期" items={dueFilters} />
+            <FilterRail label="标签" items={tagFilters} />
+          </div>
+        </aside>
 
-      <div className="space-y-3">
-        <FilterRail label="项目" items={projectFilters} />
-        <FilterRail label="状态" items={statusFilters} />
-        <FilterRail label="优先级" items={priorityFilters} />
-        <FilterRail label="截止日期" items={dueFilters} />
-        <FilterRail label="标签" items={tagFilters} />
-      </div>
-
-      <ModulePanel
-        code="任务说明"
-        title="任务页当前能力"
-        items={["任务必须归属到项目，避免行动项散落在全局列表。", "任务支持优先级、截止日期和逾期筛选，便于先处理最紧急事项。", "项目、状态、优先级、逾期、标签和关键词可以组合筛选。"]}
-      />
-
-      {tasks.length > 0 ? (
-        <section className="grid gap-3" aria-label="任务列表">
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
-          ))}
-        </section>
-      ) : (
-        <EmptyState
-          title="没有匹配的任务"
-          description="换一个关键词，或清除状态和标签筛选后再试。"
-          actionLabel="清除筛选"
-          actionHref="/tasks"
-        />
-      )}
+        {tasks.length > 0 ? (
+          <section className="grid min-w-0 gap-3 2xl:grid-cols-2" aria-label="任务列表">
+            {tasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))}
+          </section>
+        ) : (
+          <EmptyState
+            title="没有匹配的任务"
+            description="换一个关键词，或清除状态和标签筛选后再试。"
+            actionLabel="清除筛选"
+            actionHref="/tasks"
+          />
+        )}
+      </section>
     </main>
   );
 }

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -128,17 +128,17 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
     <form
       onSubmit={handleSubmit}
       onChange={clearErrors}
-      className="space-y-5 rounded-lg border-2 border-line bg-paper p-4 shadow-panel md:p-6"
+      className="space-y-5 rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm md:p-6"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标题</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">标题</span>
         <input
           name="title"
           defaultValue={initialNote?.title}
           aria-invalid={Boolean(fieldErrors.title)}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+          className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
         />
-        {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
+        {fieldErrors.title ? <span className="text-sm font-bold text-red-700">{fieldErrors.title}</span> : null}
       </label>
 
       <MarkdownEditor
@@ -152,7 +152,7 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
       />
 
       <fieldset className="space-y-3">
-        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">标签</legend>
+        <legend className="font-[var(--font-mono)] text-xs font-bold text-slate-500">标签</legend>
         <div className="flex flex-wrap gap-3">
           {tags.map((tag) => (
             <label key={tag.id} className="cursor-pointer">
@@ -170,12 +170,12 @@ export function NoteForm({ mode, tags, initialNote }: NoteFormProps) {
         </div>
       </fieldset>
 
-      {error ? <p className="text-sm font-bold text-ember">{error}</p> : null}
+      {error ? <p className="text-sm font-bold text-red-700">{error}</p> : null}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建笔记" : "保存笔记"}
       </button>

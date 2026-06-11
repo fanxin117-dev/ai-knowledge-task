@@ -1,7 +1,6 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ProjectCard } from "@/components/projects/project-card";
 import { EmptyState } from "@/components/ui/empty-state";
-import { ModulePanel } from "@/components/ui/module-panel";
 import { PageHeader } from "@/components/ui/page-header";
 import { listProjects } from "@/lib/api/services";
 
@@ -17,6 +16,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
   const params = await searchParams;
   const view = params?.view === "archived" || params?.view === "all" ? params.view : "active";
   const projects = await listProjects({ visibility: view });
+  const visibleProjects = projects.filter((project) => project.id !== "project-inbox" || project.taskCount > 0);
   const filterLinks = [
     { href: "/projects", label: "活跃项目", active: view === "active" },
     { href: "/projects?view=archived", label: "已归档", active: view === "archived" },
@@ -32,55 +32,47 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         actions={
           <Link
             href="/projects/new"
-            className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control hover:bg-blueprint"
+            className="inline-flex min-h-10 items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-950"
           >
             新建项目
           </Link>
         }
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <nav className="flex flex-wrap gap-2" aria-label="项目状态筛选">
-          {filterLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={item.active ? "page" : undefined}
-              className={[
-                "inline-flex min-h-11 items-center rounded-md border-2 border-line px-3 py-2 text-sm font-black shadow-control",
-                item.active ? "bg-ink text-surface" : "bg-paper text-ink",
-              ].join(" ")}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+      <section className="grid gap-5 xl:grid-cols-[16rem_minmax(0,1fr)]">
+        <aside className="xl:sticky xl:top-8 xl:self-start">
+          <nav className="grid gap-2 rounded-lg border border-slate-200 bg-white p-3 shadow-sm" aria-label="项目状态筛选">
+            {filterLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={item.active ? "page" : undefined}
+                className={[
+                  "inline-flex min-h-10 items-center rounded-md px-3 py-2 text-sm font-medium",
+                  item.active ? "bg-blue-50 text-blue-700" : "text-slate-500 hover:bg-slate-50 hover:text-slate-950",
+                ].join(" ")}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </aside>
 
-      <ModulePanel
-        code="项目说明"
-        title="项目管理原则"
-        items={[
-          "任务必须属于一个项目，默认项目是收件箱。",
-          "AI 行动项转任务时会创建或复用项目，避免全局任务列表失控。",
-          "项目结束后先归档，历史任务仍可查看，列表默认只显示活跃项目。",
-        ]}
-      />
-
-      {projects.length > 0 ? (
-        <section className="grid gap-4 lg:grid-cols-2" aria-label="项目列表">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </section>
-      ) : (
-        <EmptyState
-          title="还没有项目"
-          description="创建一个项目后，再把任务归属到它下面。"
-          actionLabel="新建项目"
-          actionHref="/projects/new"
-        />
-      )}
+        {visibleProjects.length > 0 ? (
+          <section className="grid min-w-0 gap-3 lg:grid-cols-2 2xl:grid-cols-3" aria-label="项目列表">
+            {visibleProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </section>
+        ) : (
+          <EmptyState
+            title="还没有项目"
+            description="创建一个项目后，再把任务归属到它下面。"
+            actionLabel="新建项目"
+            actionHref="/projects/new"
+          />
+        )}
+      </section>
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AiNotePanel } from "@/components/notes/ai-note-panel";
 import { MarkdownContent } from "@/components/ui/markdown-content";
@@ -32,16 +32,16 @@ export default async function NoteDetailPage({ params }: NoteDetailPageProps) {
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/notes/${note.id}/edit`}
-          className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
+          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑笔记
         </Link>
         <DeleteButton endpoint={`/api/notes/${note.id}`} redirectTo="/notes" label={note.title} />
       </div>
 
-      <article className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-line pb-4">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-muted">
+      <article className="rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-200 pb-4">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">
             更新于 / {note.updatedAt.slice(0, 10)}
           </p>
           <div className="flex flex-wrap gap-2">
@@ -61,7 +61,7 @@ export default async function NoteDetailPage({ params }: NoteDetailPageProps) {
         projects={projects.map((project) => ({ id: project.id, name: project.name }))}
       />
 
-      <Link href="/notes" className="inline-flex text-sm font-bold text-blueprint hover:text-ink">
+      <Link href="/notes" className="inline-flex text-sm font-bold text-blue-700 hover:text-slate-950">
         返回笔记列表
       </Link>
     </main>

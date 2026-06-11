@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -47,11 +47,11 @@ export function DeleteButton({ endpoint, redirectTo, label }: DeleteButtonProps)
         type="button"
         onClick={handleDelete}
         disabled={isDeleting}
-        className="rounded-md border-2 border-line bg-ember px-4 py-2 text-sm font-black text-ink shadow-panel disabled:opacity-60"
+        className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
       >
         {isDeleting ? "删除中..." : "删除"}
       </button>
-      {error ? <p className="text-sm font-bold text-ember">{error}</p> : null}
+      {error ? <p className="text-sm font-semibold text-red-700">{error}</p> : null}
     </div>
   );
 }

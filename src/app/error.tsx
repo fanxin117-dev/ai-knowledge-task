@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from "react";
 
@@ -15,16 +15,16 @@ export default function AppErrorPage({ error, reset }: AppErrorPageProps) {
 
   return (
     <main className="space-y-6">
-      <section className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
-        <p className="font-[var(--font-mono)] text-xs font-bold text-ember">运行时错误</p>
-        <h1 className="mt-3 font-[var(--font-display)] text-4xl font-black text-ink">页面暂时无法渲染</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
+      <section className="rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm">
+        <p className="font-[var(--font-mono)] text-xs font-bold text-red-700">运行时错误</p>
+        <h1 className="mt-3 font-[var(--font-display)] text-4xl font-black text-slate-950">页面暂时无法渲染</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
           当前页面遇到运行时错误。你可以先重试当前页面；如果刚刚修改了数据库或代码，请重新启动开发服务器后再访问。
         </p>
         <button
           type="button"
           onClick={reset}
-          className="mt-6 rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
+          className="mt-6 rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           重试当前页面
         </button>

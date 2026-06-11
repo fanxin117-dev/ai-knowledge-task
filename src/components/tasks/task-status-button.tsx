@@ -44,11 +44,11 @@ export function TaskStatusButton({ taskId, nextStatus }: TaskStatusButtonProps) 
         type="button"
         onClick={handleClick}
         disabled={isSubmitting}
-        className="rounded-md border-2 border-line bg-ink px-3 py-1.5 text-xs font-black text-surface shadow-panel disabled:opacity-60"
+        className="rounded-md bg-slate-950 px-3 py-1.5 text-xs font-semibold text-white shadow-sm disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : nextStatus === "DONE" ? "标记完成" : "重新打开"}
       </button>
-      {error ? <p className="text-xs font-bold text-ember">{error}</p> : null}
+      {error ? <p className="text-xs font-semibold text-red-700">{error}</p> : null}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-type SearchFormProps = {
+﻿type SearchFormProps = {
   action: string;
   placeholder: string;
   defaultQuery?: string;
@@ -7,21 +7,21 @@ type SearchFormProps = {
 
 export function SearchForm({ action, placeholder, defaultQuery, hiddenFields }: SearchFormProps) {
   return (
-    <form action={action} className="rounded-lg border-2 border-line bg-paper p-4 shadow-soft">
+    <form action={action} className="w-full">
       {hiddenFields
         ? Object.entries(hiddenFields).map(([name, value]) =>
             value ? <input key={name} type="hidden" name={name} value={value} /> : null,
           )
         : null}
 
-      <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">搜索</span>
+      <label className="block">
+        <span className="sr-only">搜索</span>
         <input
           type="search"
           name="q"
           defaultValue={defaultQuery}
           placeholder={placeholder}
-          className="min-h-11 w-full rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control placeholder:text-muted md:text-sm"
+          className="min-h-14 w-full rounded-md border border-slate-200 bg-white px-4 py-3 text-base text-slate-950 shadow-none placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-600 focus:bg-white focus:ring-blue-600 md:text-sm"
         />
       </label>
     </form>

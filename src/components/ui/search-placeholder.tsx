@@ -1,4 +1,4 @@
-type SearchPlaceholderProps = {
+﻿type SearchPlaceholderProps = {
   placeholder: string;
 };
 
@@ -10,7 +10,7 @@ export function SearchPlaceholder({ placeholder }: SearchPlaceholderProps) {
         disabled
         type="search"
         placeholder={placeholder}
-        className="w-full rounded-md border-2 border-line bg-surface text-sm font-semibold text-muted shadow-panel"
+        className="w-full rounded-md border border-slate-200 bg-slate-50 text-sm text-slate-500 shadow-none"
       />
     </label>
   );

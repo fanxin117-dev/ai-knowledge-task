@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/ui/markdown-content";
 import { DeleteButton } from "@/components/ui/delete-button";
@@ -31,32 +31,32 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/tasks/${task.id}/edit`}
-          className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
+          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑任务
         </Link>
         <DeleteButton endpoint={`/api/tasks/${task.id}`} redirectTo="/tasks" label={task.title} />
       </div>
 
-      <article className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-line pb-4">
+      <article className="rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-200 pb-4">
           <div>
-            <p className="font-[var(--font-mono)] text-xs font-bold text-muted">
+            <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">
               更新于 / {task.updatedAt.slice(0, 10)}
             </p>
-            <p className="mt-2 text-sm font-bold text-blueprint">项目：{task.project.name}</p>
+            <p className="mt-2 text-sm font-bold text-blue-700">项目：{task.project.name}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
+              <span className="rounded-md border border-slate-200 bg-slate-50 px-2 py-1 font-[var(--font-mono)] text-xs font-black text-slate-950">
                 优先级：{task.priority === "HIGH" ? "高" : task.priority === "MEDIUM" ? "中" : "低"}
               </span>
               {task.dueAt ? (
-                <span className={`rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black ${task.isOverdue ? "bg-ember text-ink" : "bg-paper text-muted"}`}>
+                <span className={`rounded-md border border-slate-200 px-2 py-1 font-[var(--font-mono)] text-xs font-black ${task.isOverdue ? "bg-red-50 text-slate-950" : "bg-slate-50 text-slate-500"}`}>
                   截止：{task.dueAt.slice(0, 10)}
                 </span>
               ) : null}
             </div>
           </div>
-          <span className="rounded-md border-2 border-line bg-accent px-3 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
+          <span className="rounded-md border border-slate-200 bg-blue-50 px-3 py-1 font-[var(--font-mono)] text-xs font-black text-slate-950">
             {task.status === "DONE" ? "已完成" : "未完成"}
           </span>
         </div>
@@ -64,7 +64,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
         {task.description ? (
           <MarkdownContent content={task.description} />
         ) : (
-          <p className="mt-6 text-base leading-8 text-muted">暂无描述。</p>
+          <p className="mt-6 text-base leading-8 text-slate-500">暂无描述。</p>
         )}
 
         <div className="mt-6 flex flex-wrap gap-2">
@@ -74,11 +74,11 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
         </div>
 
         {task.sourceNote ? (
-          <section className="mt-6 rounded-lg border-2 border-line bg-surface p-4">
-            <p className="font-[var(--font-mono)] text-xs font-bold text-copper">来源笔记</p>
+          <section className="mt-6 rounded-lg border border-slate-200 bg-white p-4">
+            <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">来源笔记</p>
             <Link
               href={`/notes/${task.sourceNote.id}`}
-              className="mt-2 block font-[var(--font-display)] text-xl font-bold text-blueprint hover:text-ink"
+              className="mt-2 block font-[var(--font-display)] text-xl font-bold text-blue-700 hover:text-slate-950"
             >
               {task.sourceNote.title}
             </Link>
@@ -86,7 +86,7 @@ export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
         ) : null}
       </article>
 
-      <Link href="/tasks" className="inline-flex text-sm font-bold text-blueprint hover:text-ink">
+      <Link href="/tasks" className="inline-flex text-sm font-bold text-blue-700 hover:text-slate-950">
         返回任务列表
       </Link>
     </main>

@@ -12,7 +12,7 @@ test("empty create forms show local errors without API 400 responses", async ({ 
     page.on("response", responseListener);
     await page.goto(route);
     await page.locator('button[type="submit"]').first().click();
-    await expect(page.locator(".text-ember").first()).toBeVisible();
+    await expect(page.locator(".text-red-700").first()).toBeVisible();
 
     const submitBox = await page.locator('button[type="submit"]').first().boundingBox();
     expect(submitBox?.height).toBeGreaterThanOrEqual(44);
@@ -22,19 +22,34 @@ test("empty create forms show local errors without API 400 responses", async ({ 
 });
 
 test("mobile tag edit actions meet touch target size", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/tags");
+  const createResponse = await page.request.post("/api/tags", {
+    data: {
+      name: `codex-touch-target-${Date.now()}`,
+      color: "#2563eb",
+    },
+  });
+  const createPayload = (await createResponse.json()) as { data?: { id?: string } };
+  const tagId = createPayload.data?.id;
 
-  const editLinks = page.locator('a[href$="/edit"]');
-  await expect(editLinks.first()).toBeVisible();
+  try {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/tags");
 
-  for (const box of await editLinks.evaluateAll((links) =>
-    links.map((link) => {
-      const rect = link.getBoundingClientRect();
-      return { height: rect.height, width: rect.width };
-    }),
-  )) {
-    expect(box.height).toBeGreaterThanOrEqual(44);
-    expect(box.width).toBeGreaterThanOrEqual(44);
+    const editLinks = page.locator('a[href$="/edit"]');
+    await expect(editLinks.first()).toBeVisible();
+
+    for (const box of await editLinks.evaluateAll((links) =>
+      links.map((link) => {
+        const rect = link.getBoundingClientRect();
+        return { height: rect.height, width: rect.width };
+      }),
+    )) {
+      expect(box.height).toBeGreaterThanOrEqual(44);
+      expect(box.width).toBeGreaterThanOrEqual(44);
+    }
+  } finally {
+    if (tagId) {
+      await page.request.delete(`/api/tags/${tagId}`);
+    }
   }
 });

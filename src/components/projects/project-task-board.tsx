@@ -86,13 +86,13 @@ function BoardColumn({
   const sortedTasks = useMemo(() => [...tasks].sort((a, b) => compareTasks(a, b, sortMode)), [tasks, sortMode]);
 
   return (
-    <section className="min-h-96 rounded-lg border-2 border-line bg-surface p-4 shadow-panel">
-      <div className="mb-4 flex items-center justify-between gap-3 border-b-2 border-line pb-3">
-        <h2 className="text-lg font-black text-ink">{title}</h2>
+    <section className="min-h-96 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-4 flex items-center justify-between gap-3 border-b border-slate-200 pb-3">
+        <h2 className="text-lg font-semibold text-slate-950">{title}</h2>
         <span
           className={[
-            "rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink",
-            tone === "open" ? "bg-ember" : "bg-accent",
+            "rounded-md px-2 py-1 text-xs font-semibold",
+            tone === "open" ? "bg-slate-100 text-slate-600" : "bg-green-50 text-green-700",
           ].join(" ")}
         >
           {sortedTasks.length}
@@ -102,36 +102,36 @@ function BoardColumn({
       {sortedTasks.length > 0 ? (
         <div className="grid gap-3">
           {sortedTasks.map((task) => (
-            <article key={task.id} className="rounded-md border-2 border-line bg-paper p-4">
+            <article key={task.id} className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <label className="flex min-w-0 flex-1 cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
                     checked={selectedTaskIds.has(task.id)}
                     onChange={() => onToggleTask(task.id)}
-                    className="mt-1 rounded border-2 border-line text-blueprint"
+                    className="mt-1 rounded border-slate-300 text-blue-600"
                   />
                   <div className="min-w-0">
-                  <p className="font-[var(--font-mono)] text-xs font-bold text-copper">
+                  <p className="text-xs font-medium text-slate-500">
                     更新于 / {task.updatedAt.slice(0, 10)}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
+                    <span className="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-600">
                       优先级：{priorityLabel(task.priority)}
                     </span>
                     {task.dueAt ? (
-                      <span className={`rounded-md border-2 border-line px-2 py-1 font-[var(--font-mono)] text-xs font-black ${task.isOverdue ? "bg-ember text-ink" : "bg-surface text-muted"}`}>
+                      <span className={`rounded-md px-2 py-1 text-xs font-semibold ${task.isOverdue ? "bg-red-50 text-red-700" : "bg-slate-50 text-slate-500"}`}>
                         截止：{task.dueAt.slice(0, 10)}
                       </span>
                     ) : null}
                   </div>
-                  <h3 className="mt-2 line-clamp-2 text-base font-black leading-tight text-ink">{task.title}</h3>
+                  <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-tight text-slate-950">{task.title}</h3>
                   </div>
                 </label>
                 <TaskStatusButton taskId={task.id} nextStatus={nextStatus} />
               </div>
 
-              <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted">{task.description ?? "暂无描述。"}</p>
+              <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{task.description ?? "暂无描述。"}</p>
 
               <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap gap-2">
@@ -139,7 +139,7 @@ function BoardColumn({
                     <TagPill key={tag.id} tag={tag} />
                   ))}
                 </div>
-                <Link href={`/tasks/${task.id}`} className="text-sm font-bold text-blueprint hover:text-ink">
+                <Link href={`/tasks/${task.id}`} className="text-sm font-semibold text-blue-700 hover:text-slate-950">
                   查看详情
                 </Link>
               </div>
@@ -210,13 +210,13 @@ export function ProjectTaskBoard({ openTasks, doneTasks }: ProjectTaskBoardProps
 
   return (
     <section className="space-y-4" aria-label="项目任务看板">
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border-2 border-line bg-paper p-4 shadow-panel">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">排序</span>
+          <span className="text-xs font-medium text-slate-500">排序</span>
           <select
             value={sortMode}
             onChange={(event) => setSortMode(event.target.value as SortMode)}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-950 shadow-none"
           >
             <option value="smart">截止日期优先，再按优先级</option>
             <option value="due">截止日期</option>
@@ -225,14 +225,14 @@ export function ProjectTaskBoard({ openTasks, doneTasks }: ProjectTaskBoardProps
           </select>
         </label>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">
+          <span className="text-xs font-medium text-slate-500">
             已选择 {selectedTaskIds.size}
           </span>
           <button
             type="button"
             disabled={isBulkUpdating}
             onClick={() => void bulkUpdate("DONE")}
-            className="rounded-md border-2 border-line bg-ink px-3 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm disabled:opacity-60"
           >
             批量完成
           </button>
@@ -240,12 +240,12 @@ export function ProjectTaskBoard({ openTasks, doneTasks }: ProjectTaskBoardProps
             type="button"
             disabled={isBulkUpdating}
             onClick={() => void bulkUpdate("OPEN")}
-            className="rounded-md border-2 border-line bg-paper px-3 py-2 text-sm font-black text-ink shadow-panel disabled:opacity-60"
+            className="rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-slate-950 disabled:opacity-60"
           >
             批量重开
           </button>
         </div>
-        {bulkMessage ? <p className="basis-full text-sm font-bold text-blueprint">{bulkMessage}</p> : null}
+        {bulkMessage ? <p className="basis-full text-sm font-semibold text-blue-700">{bulkMessage}</p> : null}
       </div>
 
       <div className="grid gap-4 xl:grid-cols-2">

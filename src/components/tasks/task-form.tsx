@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -152,17 +152,17 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
     <form
       onSubmit={handleSubmit}
       onChange={clearErrors}
-      className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
+      className="space-y-5 rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">标题</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">标题</span>
         <input
           name="title"
           defaultValue={initialTask?.title}
           aria-invalid={Boolean(fieldErrors.title)}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+          className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
         />
-        {fieldErrors.title ? <span className="text-sm font-bold text-ember">{fieldErrors.title}</span> : null}
+        {fieldErrors.title ? <span className="text-sm font-bold text-red-700">{fieldErrors.title}</span> : null}
       </label>
 
       <MarkdownEditor
@@ -176,11 +176,11 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
         <label className="grid min-w-0 gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">项目</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">项目</span>
           <select
             name="projectId"
             defaultValue={initialTask?.projectId ?? projects[0]?.id ?? ""}
-            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+            className="min-h-11 min-w-0 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             {projects.map((project) => (
               <option key={project.id} value={project.id}>
@@ -191,11 +191,11 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         </label>
 
         <label className="grid min-w-0 gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">状态</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">状态</span>
           <select
             name="status"
             defaultValue={initialTask?.status ?? TaskStatus.OPEN}
-            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+            className="min-h-11 min-w-0 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             <option value={TaskStatus.OPEN}>未完成</option>
             <option value={TaskStatus.DONE}>已完成</option>
@@ -203,11 +203,11 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         </label>
 
         <label className="grid min-w-0 gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">优先级</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">优先级</span>
           <select
             name="priority"
             defaultValue={initialTask?.priority ?? TaskPriority.MEDIUM}
-            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+            className="min-h-11 min-w-0 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             <option value={TaskPriority.HIGH}>高</option>
             <option value={TaskPriority.MEDIUM}>中</option>
@@ -216,23 +216,23 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         </label>
 
         <label className="grid min-w-0 gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">截止日期</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">截止日期</span>
           <input
             type="date"
             name="dueAt"
             defaultValue={initialTask?.dueAt?.slice(0, 10) ?? ""}
             aria-invalid={Boolean(fieldErrors.dueAt)}
-            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+            className="min-h-11 min-w-0 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           />
-          {fieldErrors.dueAt ? <span className="text-sm font-bold text-ember">{fieldErrors.dueAt}</span> : null}
+          {fieldErrors.dueAt ? <span className="text-sm font-bold text-red-700">{fieldErrors.dueAt}</span> : null}
         </label>
 
         <label className="grid min-w-0 gap-2 md:col-span-2 xl:col-span-1">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">来源笔记</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">来源笔记</span>
           <select
             name="sourceNoteId"
             defaultValue={initialTask?.sourceNoteId ?? ""}
-            className="min-h-11 min-w-0 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+            className="min-h-11 min-w-0 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             <option value="">无来源笔记</option>
             {notes.map((note) => (
@@ -245,7 +245,7 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
       </div>
 
       <fieldset className="space-y-3">
-        <legend className="font-[var(--font-mono)] text-xs font-bold text-muted">标签</legend>
+        <legend className="font-[var(--font-mono)] text-xs font-bold text-slate-500">标签</legend>
         <div className="flex flex-wrap gap-3">
           {tags.map((tag) => (
             <label key={tag.id} className="cursor-pointer">
@@ -263,12 +263,12 @@ export function TaskForm({ mode, tags, notes, projects, initialTask }: TaskFormP
         </div>
       </fieldset>
 
-      {error ? <p className="text-sm font-bold text-ember">{error}</p> : null}
+      {error ? <p className="text-sm font-bold text-red-700">{error}</p> : null}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建任务" : "保存任务"}
       </button>

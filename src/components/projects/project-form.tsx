@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -97,17 +97,17 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
     <form
       onSubmit={handleSubmit}
       onChange={clearErrors}
-      className="space-y-5 rounded-lg border-2 border-line bg-paper p-6 shadow-panel"
+      className="space-y-5 rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm"
     >
       <label className="grid gap-2">
-        <span className="font-[var(--font-mono)] text-xs font-bold text-muted">项目名</span>
+        <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">项目名</span>
         <input
           name="name"
           defaultValue={initialProject?.name}
           aria-invalid={Boolean(fieldErrors.name)}
-          className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-panel md:text-sm"
+          className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
         />
-        {fieldErrors.name ? <span className="text-sm font-bold text-ember">{fieldErrors.name}</span> : null}
+        {fieldErrors.name ? <span className="text-sm font-bold text-red-700">{fieldErrors.name}</span> : null}
       </label>
 
       <MarkdownEditor
@@ -119,12 +119,12 @@ export function ProjectForm({ mode, initialProject }: ProjectFormProps) {
         minHeightClassName="min-h-[16rem]"
       />
 
-      {error ? <p className="text-sm font-bold text-ember">{error}</p> : null}
+      {error ? <p className="text-sm font-bold text-red-700">{error}</p> : null}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="inline-flex min-h-11 items-center rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+        className="inline-flex min-h-11 items-center rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
       >
         {isSubmitting ? "保存中..." : mode === "create" ? "创建项目" : "保存项目"}
       </button>

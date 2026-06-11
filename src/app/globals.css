@@ -4,10 +4,10 @@
 
 :root {
   color-scheme: light;
-  --font-display: "Iowan Old Style", "Cochin", "Georgia", serif;
+  --font-display: "Aptos Display", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-body: "Aptos", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-mono: "Cascadia Mono", "SFMono-Regular", "Consolas", monospace;
-  background: #f3eddc;
+  background: #f8fafc;
 }
 
 * {
@@ -21,16 +21,8 @@ html {
 body {
   min-height: 100dvh;
   margin: 0;
-  background:
-    linear-gradient(90deg, rgba(22, 19, 13, 0.055) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(22, 19, 13, 0.045) 1px, transparent 1px),
-    repeating-linear-gradient(135deg, rgba(36, 87, 214, 0.08) 0 1px, transparent 1px 18px),
-    #f3eddc;
-  background-size:
-    44px 44px,
-    44px 44px,
-    auto;
-  color: #16130d;
+  background: #f8fafc;
+  color: #0f172a;
   font-family: var(--font-body);
 }
 
@@ -55,8 +47,12 @@ textarea {
 }
 
 :focus-visible {
-  outline: 3px solid #2457d6;
+  outline: 3px solid #2563eb;
   outline-offset: 3px;
+}
+
+[data-editor-block]:focus-visible {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -72,24 +68,6 @@ textarea {
 }
 
 ::selection {
-  background: #d7ff37;
-  color: #16130d;
-}
-
-.paper-grain {
-  position: relative;
-}
-
-.paper-grain::before {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  content: "";
-  background-image:
-    linear-gradient(115deg, rgba(22, 19, 13, 0.04), transparent 18%, rgba(22, 19, 13, 0.035) 19%, transparent 36%),
-    radial-gradient(circle, rgba(22, 19, 13, 0.12) 0.6px, transparent 0.8px);
-  background-size: 180px 180px, 9px 9px;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
+  background: #dbeafe;
+  color: #0f172a;
 }

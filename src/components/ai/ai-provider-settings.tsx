@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import type { AiApiStyle, AiRuntimeConfig } from "@/lib/ai/types";
@@ -193,20 +193,20 @@ export function AiProviderSettings() {
   const modelError = touched.model ? fieldErrors.model : undefined;
   const feedbackClassName = (tone: Feedback["tone"]) =>
     [
-      "rounded-lg border-2 border-line p-4 text-sm font-bold leading-6",
-      tone === "success" ? "bg-success text-ink" : tone === "error" ? "bg-danger text-surface" : "bg-surface text-blueprint",
+      "rounded-lg border border-slate-200 p-4 text-sm font-bold leading-6",
+      tone === "success" ? "bg-green-50 text-slate-950" : tone === "error" ? "bg-red-600 text-white" : "bg-white text-blue-700",
     ].join(" ");
 
   return (
-    <section className="space-y-5 rounded-lg border-2 border-line bg-paper p-4 shadow-soft md:p-6">
+    <section className="space-y-5 rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm md:p-6">
       <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(12rem,18rem)] md:items-end">
         <div>
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">AI 配置</p>
-          <h2 className="mt-2 font-[var(--font-display)] text-2xl font-black leading-tight text-ink">连接参数</h2>
-          <p className="mt-2 text-sm leading-6 text-muted">先确认运行模式和模型参数，再保存或测试连接。</p>
+          <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">AI 配置</p>
+          <h2 className="mt-2 font-[var(--font-display)] text-2xl font-black leading-tight text-slate-950">连接参数</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-500">先确认运行模式和模型参数，再保存或测试连接。</p>
         </div>
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">快速套用预设</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">快速套用预设</span>
           <select
             value={selectedPresetId}
             onChange={(event) => {
@@ -214,7 +214,7 @@ export function AiProviderSettings() {
                 applyPreset(event.target.value);
               }
             }}
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             <option value="custom">自定义配置</option>
             {AI_CONFIG_PRESETS.map((preset) => (
@@ -228,11 +228,11 @@ export function AiProviderSettings() {
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">运行模式</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">运行模式</span>
           <select
             value={config.mode}
             onChange={(event) => updateField("mode", event.target.value as EditableConfig["mode"])}
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           >
             <option value="mock">本地模拟</option>
             <option value="openai-compatible">兼容 OpenAI 接口</option>
@@ -240,19 +240,19 @@ export function AiProviderSettings() {
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">配置名称</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">配置名称</span>
           <input
             value={config.label}
             onChange={(event) => updateField("label", event.target.value)}
             placeholder="例如 OpenAI / DeepSeek / 本地模型"
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm md:text-sm"
           />
         </label>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口地址</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">接口地址</span>
           <input
             value={config.baseUrl}
             disabled={isMock}
@@ -261,13 +261,13 @@ export function AiProviderSettings() {
             placeholder="https://api.example.com/v1"
             aria-invalid={Boolean(baseUrlError)}
             aria-describedby={baseUrlError ? "ai-base-url-error" : undefined}
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           />
-          {baseUrlError ? <span id="ai-base-url-error" className="text-sm font-bold text-danger">{baseUrlError}</span> : null}
+          {baseUrlError ? <span id="ai-base-url-error" className="text-sm font-bold text-red-700">{baseUrlError}</span> : null}
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">模型名称</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">模型名称</span>
           <input
             value={config.model}
             disabled={isMock}
@@ -276,20 +276,20 @@ export function AiProviderSettings() {
             placeholder="例如 gpt-5.2 / deepseek-chat / llama3.2"
             aria-invalid={Boolean(modelError)}
             aria-describedby={modelError ? "ai-model-error" : undefined}
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           />
-          {modelError ? <span id="ai-model-error" className="text-sm font-bold text-danger">{modelError}</span> : null}
+          {modelError ? <span id="ai-model-error" className="text-sm font-bold text-red-700">{modelError}</span> : null}
         </label>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口风格</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">接口风格</span>
           <select
             value={config.apiStyle}
             disabled={isMock}
             onChange={(event) => updateField("apiStyle", event.target.value as AiApiStyle)}
-            className="min-h-11 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            className="min-h-11 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           >
             <option value="chat-completions">聊天补全接口</option>
             <option value="responses">响应接口</option>
@@ -297,7 +297,7 @@ export function AiProviderSettings() {
         </label>
 
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">接口密钥</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">接口密钥</span>
           <div className="flex gap-2">
             <input
               value={config.apiKey}
@@ -305,13 +305,13 @@ export function AiProviderSettings() {
               type={showApiKey ? "text" : "password"}
               onChange={(event) => updateField("apiKey", event.target.value)}
               placeholder="本地模型可留空，云端模型通常需要填写"
-              className="min-h-11 min-w-0 flex-1 rounded-md border-2 border-line bg-surface px-3 py-2 text-base font-semibold text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              className="min-h-11 min-w-0 flex-1 rounded-md border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
             />
             <button
               type="button"
               disabled={isMock}
               onClick={() => setShowApiKey((current) => !current)}
-              className="min-h-11 rounded-md border-2 border-line bg-paper px-3 py-2 text-sm font-black text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-50"
+              className="min-h-11 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-black text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-50"
             >
               {showApiKey ? "隐藏" : "显示"}
             </button>
@@ -319,7 +319,7 @@ export function AiProviderSettings() {
         </label>
       </div>
 
-      <div className="rounded-lg border-2 border-line bg-surface p-4 text-sm leading-6 text-muted shadow-control">
+      <div className="rounded-lg border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-500 shadow-sm">
         接口密钥只保存到当前浏览器的本地存储，不写入服务端数据库。多人共用电脑时，请不要保存自己的生产密钥。
       </div>
 
@@ -328,7 +328,7 @@ export function AiProviderSettings() {
           type="button"
           onClick={save}
           disabled={!canSave}
-          className="min-h-11 rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-control disabled:cursor-not-allowed disabled:opacity-60"
+          className="min-h-11 rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
         >
           保存配置
         </button>
@@ -336,7 +336,7 @@ export function AiProviderSettings() {
           type="button"
           onClick={testConnection}
           disabled={!canSave || isTesting}
-          className="min-h-11 rounded-md border-2 border-line bg-paper px-4 py-2 text-sm font-black text-ink shadow-control disabled:cursor-not-allowed disabled:opacity-60"
+          className="min-h-11 rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isTesting ? "测试中..." : "测试连接"}
         </button>
@@ -347,10 +347,10 @@ export function AiProviderSettings() {
         {testResult ? <p className={feedbackClassName(testResult.tone)}>{testResult.text}</p> : null}
       </div>
 
-      <details className="rounded-lg border-2 border-line bg-surface p-4 shadow-control">
-        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-bold text-ink">
-          <span className="font-[var(--font-mono)] text-xs text-copper">服务商预设</span>
-          <span className="text-sm text-muted">查看预设说明</span>
+      <details className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-bold text-slate-950">
+          <span className="font-[var(--font-mono)] text-xs text-slate-500">服务商预设</span>
+          <span className="text-sm text-slate-500">查看预设说明</span>
         </summary>
         <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {AI_CONFIG_PRESETS.map((preset) => (
@@ -358,10 +358,10 @@ export function AiProviderSettings() {
               key={preset.id}
               type="button"
               onClick={() => applyPreset(preset.id)}
-              className="rounded-lg border-2 border-line bg-paper p-4 text-left shadow-control hover:bg-accent"
+              className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-left shadow-sm hover:bg-blue-50"
             >
-              <span className="block text-sm font-black text-ink">{preset.name}</span>
-              <span className="mt-2 block text-xs leading-5 text-muted">{preset.description}</span>
+              <span className="block text-sm font-black text-slate-950">{preset.name}</span>
+              <span className="mt-2 block text-xs leading-5 text-slate-500">{preset.description}</span>
             </button>
           ))}
         </div>

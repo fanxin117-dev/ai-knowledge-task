@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { SearchForm } from "@/components/ui/search-form";
@@ -25,9 +25,9 @@ function ResultSection({
 }) {
   return (
     <section className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-line pb-3">
-        <h2 className="font-[var(--font-display)] text-2xl font-black text-ink">{title}</h2>
-        <span className="rounded-md border-2 border-line bg-paper px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+        <h2 className="text-lg font-semibold text-slate-950">{title}</h2>
+        <span className="rounded-md bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-700">
           {count}
         </span>
       </div>
@@ -51,12 +51,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       <SearchForm action="/search" placeholder="搜索标题、正文、项目或标签" defaultQuery={query} />
 
-      {!query.trim() ? (
-        <EmptyState
-          title="输入关键词开始搜索"
-          description="例如搜索一个项目名、任务标题、笔记片段或标签名称，结果会按内容类型分组展示。"
-        />
-      ) : results.totalCount === 0 ? (
+      {!query.trim() ? null : results.totalCount === 0 ? (
         <EmptyState
           title="没有匹配结果"
           description="换一个更短的关键词，或先到笔记、任务、项目和标签页确认内容是否已经保存。"
@@ -65,7 +60,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         />
       ) : (
         <div className="space-y-8">
-          <p className="rounded-lg border-2 border-line bg-paper p-4 text-sm font-bold text-muted shadow-soft">
+          <p className="rounded-lg border border-slate-200 bg-white p-4 text-sm font-medium text-slate-500 shadow-sm">
             “{results.query}” 共找到 {results.totalCount} 条结果。
           </p>
 
@@ -96,15 +91,12 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
-                    className="rounded-lg border-2 border-line bg-surface p-4 shadow-soft hover:bg-paper"
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:bg-slate-50"
                   >
-                    <p className="font-[var(--font-mono)] text-xs font-bold text-copper">
+                    <p className="text-xs font-medium text-slate-500">
                       {project.isArchived ? "已归档" : "进行中"} / {project.openTaskCount}/{project.taskCount}
                     </p>
-                    <h2 className="mt-2 text-xl font-black text-ink">{project.name}</h2>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">
-                      {project.description ?? "这个项目还没有描述。"}
-                    </p>
+                    <h2 className="mt-2 text-lg font-semibold text-slate-950">{project.name}</h2>
                   </Link>
                 ))}
               </div>
@@ -113,7 +105,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
           {results.tags.length > 0 ? (
             <ResultSection title="标签" count={results.tags.length}>
-              <div className="flex flex-wrap gap-2 rounded-lg border-2 border-line bg-surface p-4 shadow-soft">
+              <div className="flex flex-wrap gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
                 {results.tags.map((tag) => (
                   <TagPill key={tag.id} tag={tag} />
                 ))}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -232,21 +232,21 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
   const isBusy = activeOperation !== null;
   const noticeClassName =
     notice?.kind === "error"
-      ? "border-ember bg-paper text-ember"
+      ? "border-red-200 bg-red-50 text-red-700"
       : notice?.kind === "success"
-        ? "border-line bg-accent text-ink"
-        : "border-line bg-paper text-blueprint";
+        ? "border-slate-200 bg-blue-50 text-slate-950"
+        : "border-slate-200 bg-slate-50 text-blue-700";
   const canCreateTasks = items.some((item) => item.title.trim().length > 0);
 
   return (
-    <section className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-line pb-3">
-        <h2 className="font-[var(--font-display)] text-2xl font-black text-ink">AI 工作区</h2>
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-200 pb-3">
+        <h2 className="font-[var(--font-display)] text-2xl font-black text-slate-950">AI 工作区</h2>
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-md border-2 border-line bg-accent px-2 py-1 font-[var(--font-mono)] text-xs font-black text-ink">
+          <span className="rounded-md border border-slate-200 bg-blue-50 px-2 py-1 font-[var(--font-mono)] text-xs font-black text-slate-950">
             {aiConfig.mode === "mock" ? "本地模拟" : aiConfig.label || "自定义"}
           </span>
-          <Link href="/settings/ai" className="text-sm font-bold text-blueprint hover:text-ink">
+          <Link href="/settings/ai" className="text-sm font-bold text-blue-700 hover:text-slate-950">
             配置
           </Link>
         </div>
@@ -257,7 +257,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy}
           onClick={summarize}
-          className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel disabled:opacity-60"
+          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm disabled:opacity-60"
         >
           {activeOperation === "summary" ? "生成中..." : "生成摘要"}
         </button>
@@ -265,7 +265,7 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy}
           onClick={extractActions}
-          className="rounded-md border-2 border-line bg-paper px-4 py-2 text-sm font-black text-ink shadow-panel disabled:opacity-60"
+          className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
         >
           {activeOperation === "actions" ? "提取中..." : "提取行动项"}
         </button>
@@ -273,25 +273,25 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           type="button"
           disabled={isBusy || !canCreateTasks}
           onClick={createTasks}
-          className="rounded-md border-2 border-line bg-ember px-4 py-2 text-sm font-black text-ink shadow-panel disabled:opacity-60"
+          className="rounded-md border border-slate-200 bg-red-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm disabled:opacity-60"
         >
           {activeOperation === "tasks" ? "同步中..." : "行动项转任务"}
         </button>
       </div>
 
       {lastSavedAt ? (
-        <p className="mt-4 font-[var(--font-mono)] text-xs font-bold text-muted">
+        <p className="mt-4 font-[var(--font-mono)] text-xs font-bold text-slate-500">
           最近保存 / {lastSavedAt.slice(0, 19).replace("T", " ")}
         </p>
       ) : null}
 
       {summary ? (
-        <div className="mt-4 rounded-md border-2 border-line bg-paper p-4">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">已保存摘要</p>
-          <p className="mt-2 text-sm leading-6 text-muted">{summary}</p>
+        <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">已保存摘要</p>
+          <p className="mt-2 text-sm leading-6 text-slate-500">{summary}</p>
         </div>
       ) : (
-        <p className="mt-4 rounded-md border-2 border-line bg-paper p-4 text-sm font-bold text-muted">
+        <p className="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4 text-sm font-bold text-slate-500">
           暂无摘要。点击“生成摘要”后，结果会保存到数据库并在这里展示。
         </p>
       )}
@@ -299,23 +299,23 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
       {items.length > 0 ? (
         <ul className="mt-4 space-y-3">
           {items.map((item, index) => (
-            <li key={index} className="grid gap-3 rounded-md border-2 border-line bg-paper p-3">
+            <li key={index} className="grid gap-3 rounded-md border border-slate-200 bg-slate-50 p-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="font-[var(--font-mono)] text-xs font-bold text-copper">行动项 {index + 1}</p>
+                <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">行动项 {index + 1}</p>
                 <button
                   type="button"
                   onClick={() => removeActionItem(index)}
-                  className="rounded-md border-2 border-line bg-surface px-2 py-1 text-xs font-black text-muted hover:bg-ember hover:text-ink"
+                  className="rounded-md border border-slate-200 bg-white px-2 py-1 text-xs font-black text-slate-500 hover:bg-red-50 hover:text-slate-950"
                 >
                   删除
                 </button>
               </div>
               <label className="grid gap-2">
-                <span className="font-[var(--font-mono)] text-xs font-bold text-muted">任务标题</span>
+                <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">任务标题</span>
                 <input
                   value={item.title}
                   onChange={(event) => updateActionItem(index, "title", event.target.value)}
-                  className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-control"
+                  className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
                 />
               </label>
               <MarkdownEditor
@@ -331,13 +331,13 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
         </ul>
       ) : null}
 
-      <div className="mt-4 grid gap-3 rounded-lg border-2 border-line bg-paper p-4 md:grid-cols-2">
+      <div className="mt-4 grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 md:grid-cols-2">
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">目标项目</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">目标项目</span>
           <select
             value={projectId}
             onChange={(event) => setProjectId(event.target.value)}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel"
+            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm"
           >
             <option value="">按下方名称创建或复用项目</option>
             {projects.map((project) => (
@@ -348,18 +348,18 @@ export function AiNotePanel({ noteId, noteTitle, aiResults, projects }: AiNotePa
           </select>
         </label>
         <label className="grid gap-2">
-          <span className="font-[var(--font-mono)] text-xs font-bold text-muted">新项目名称</span>
+          <span className="font-[var(--font-mono)] text-xs font-bold text-slate-500">新项目名称</span>
           <input
             value={projectName}
             disabled={Boolean(projectId)}
             onChange={(event) => setProjectName(event.target.value)}
-            className="rounded-md border-2 border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-panel disabled:opacity-50"
+            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 shadow-sm disabled:opacity-50"
           />
         </label>
       </div>
 
       {notice ? (
-        <div className={`mt-4 rounded-md border-2 p-3 text-sm font-bold ${noticeClassName}`}>
+        <div className={`mt-4 rounded-md border p-3 text-sm font-semibold ${noticeClassName}`}>
           <p>{notice.text}</p>
           {notice.kind === "error" && lastOperation ? (
             <button type="button" onClick={retryLastOperation} className="mt-2 underline decoration-2 underline-offset-4">

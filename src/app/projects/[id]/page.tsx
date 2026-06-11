@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/ui/markdown-content";
 import { ProjectArchiveButton } from "@/components/projects/project-archive-button";
@@ -39,13 +39,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       <div className="flex flex-wrap gap-3">
         <Link
           href={`/projects/${project.id}/edit`}
-          className="rounded-md border-2 border-line bg-ink px-4 py-2 text-sm font-black text-surface shadow-panel"
+          className="rounded-md border border-slate-200 bg-slate-950 px-4 py-2 text-sm font-black text-white shadow-sm"
         >
           编辑项目
         </Link>
         <Link
           href={`/tasks?project=${project.id}`}
-          className="rounded-md border-2 border-line bg-paper px-4 py-2 text-sm font-black text-ink shadow-panel"
+          className="rounded-md border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-black text-slate-950 shadow-sm"
         >
           查看任务筛选
         </Link>
@@ -56,22 +56,22 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
       </div>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">未完成任务</p>
-          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.openTaskCount}</p>
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">未完成任务</p>
+          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-slate-950">{project.openTaskCount}</p>
         </div>
-        <div className="rounded-lg border-2 border-line bg-surface p-5 shadow-panel">
-          <p className="font-[var(--font-mono)] text-xs font-bold text-copper">任务总数</p>
-          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-ink">{project.taskCount}</p>
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">任务总数</p>
+          <p className="mt-2 font-[var(--font-display)] text-5xl font-black text-slate-950">{project.taskCount}</p>
         </div>
       </section>
 
-      <article className="rounded-lg border-2 border-line bg-paper p-6 shadow-panel">
-        <p className="font-[var(--font-mono)] text-xs font-bold text-copper">项目描述</p>
+      <article className="rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-sm">
+        <p className="font-[var(--font-mono)] text-xs font-bold text-slate-500">项目描述</p>
         {project.description ? (
           <MarkdownContent content={project.description} />
         ) : (
-          <p className="mt-4 text-base leading-8 text-muted">这个项目还没有描述。</p>
+          <p className="mt-4 text-base leading-8 text-slate-500">这个项目还没有描述。</p>
         )}
       </article>
 
